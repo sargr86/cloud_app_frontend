@@ -6,6 +6,7 @@ import {dpFormats, dpProviders} from '../../shared/constants/datepicker-formats'
 import {DateAdapter} from "@angular/material";
 
 import * as fc from "../../shared/constants/form_config";
+import {infoBox} from "../../shared/constants/info_box_data";
 
 import * as dropzoneConfig from '../../shared/constants/dropzone';
 import {DropzoneConfigInterface} from "ngx-dropzone-wrapper";
@@ -30,6 +31,8 @@ export class RegisterComponent implements OnInit {
 
     lang: string = this.getLang.transform();
     formAction: string = this._router.url.includes('register') ? 'register' : 'update';
+    infoBoxData: string[];
+    editProfile: boolean = false;
 
     registerForm: FormGroup;
     userData: User;
@@ -60,6 +63,9 @@ export class RegisterComponent implements OnInit {
 
     ngOnInit() {
         this.registerForm = this._fb.group(this.getFormFields.transform())
+
+        // Getting info box elements for this page
+        this.infoBoxData = this.editProfile ? infoBox.profileEdit : infoBox.userRegistration;
     }
 
 
