@@ -1,3 +1,6 @@
-<p>
-  register works!
-</p>
+<h1>OK</h1>
+<form [formGroup]="registerForm" method="post" enctype="multipart/form-data">
+  <input type="file" name="profile-image" (change)="getFile($event)" formControlName="profile_img">
+  <input formControlName="foo">
+  <button (click)="upload()">Upload</button>
+</form>

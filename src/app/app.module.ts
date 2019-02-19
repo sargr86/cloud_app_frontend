@@ -5,6 +5,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {AuthService} from "./shared/services/auth.service";
 import {AuthModule} from "./auth/auth.module";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
     declarations: [
@@ -13,6 +14,7 @@ import {AuthModule} from "./auth/auth.module";
     imports: [
         BrowserModule,
         AppRoutingModule,
+        HttpClientModule,
         AuthModule
     ],
     providers: [AuthService],
