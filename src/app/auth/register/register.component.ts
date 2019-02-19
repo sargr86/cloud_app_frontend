@@ -77,11 +77,6 @@ export class RegisterComponent implements OnInit {
 
         let formData: FormData = this.buildFormData();
 
-
-        formData.forEach((value, key) => {
-            console.log(key + " " + value)
-        });
-
         this._auth[this.formAction](formData).subscribe(dt=>{
 
         });
@@ -90,11 +85,21 @@ export class RegisterComponent implements OnInit {
     }
 
 
+    /**
+     * Builds formData with form fields value and drop zone file
+     * @returns {FormData}
+     */
     buildFormData() {
         let formData: FormData = new FormData();
+        let formValue = this.registerForm.value;
 
-        for (let field in this.registerForm.value) {
-            formData.append(field, this.registerForm.value[field])
+        for (let field in formValue) {
+            if(field == 'birthday'){
+                if(formValue['birthday']){
+                    formData.append(field, formValue[field])
+                }
+            }
+            else formData.append(field, formValue[field])
         }
 
         // If drop zone file exists saving it to formData object as well
