@@ -15,6 +15,7 @@ import {AuthService} from "../../shared/services/auth.service";
 import {GetLangPipe} from "../../shared/pipes/get-lang.pipe";
 import {GetUserRegistrationFieldsPipe} from "../../shared/pipes/get-user-registration-fields.pipe";
 import {User} from "../../shared/models/User";
+import {FixMatDatepickerDateFormatPipe} from "../../shared/pipes/fix-mat-datepicker-date-format.pipe";
 
 
 @Component({
@@ -41,15 +42,44 @@ export class RegisterComponent implements OnInit {
         private getLang: GetLangPipe,
         private adapter: DateAdapter<any>,
         private getFormFields: GetUserRegistrationFieldsPipe,
+        private fixDpFormat: FixMatDatepickerDateFormatPipe
     ) {
         // Getting form fields and drop zone config
         this.fieldsConfig = fc;
         this.dropzoneConfig = dropzoneConfig.USER_PROFILE_IMG_DROPZONE_CONFIG;
+
+        // Setting current form language equal to last saved one
+        this.lang = this.getLang.transform();
+        this.setAdapterLang(this.lang);
     }
 
     ngOnInit() {
         this.registerForm = this._fb.group(this.getFormFields.transform())
     }
+
+
+
+
+    /**
+     * Sends user registration data to the auth service
+     */
+    register() {
+
+        // Fixing birthday value date format to meet our needs
+        this.fixDpFormat.transform(this.birthdayField);
+
+
+        // If registration or profile editing form is valid saving its data to formData object
+        // if (this.registerForm.valid) {
+        this._auth.formProcessing = true;
+
+        console.log(this.registerForm.value)
+
+
+
+
+    }
+
 
 
     /**
@@ -61,12 +91,15 @@ export class RegisterComponent implements OnInit {
     }
 
 
+
+
+
     /**
      * First name field control getter
      * @returns {AbstractControl}
      */
     get firstName() {
-        return this.registerForm.controls[`first_name_${this.lang}`];
+        return this.registerForm.get(`first_name_${this.lang}`);
     }
 
     /**
@@ -74,7 +107,11 @@ export class RegisterComponent implements OnInit {
      * @returns {AbstractControl}
      */
     get lastName(): AbstractControl {
-        return this.registerForm.controls[`last_name_${this.lang}`];
+        return this.registerForm.get(`last_name_${this.lang}`);
+    }
+
+    get birthdayField(){
+        return this.registerForm.get('birthday');
     }
 
     /**
@@ -82,7 +119,7 @@ export class RegisterComponent implements OnInit {
      * @returns {AbstractControl}
      */
     get email(): AbstractControl {
-        return this.registerForm.controls['email']
+        return this.registerForm.get('email');
     }
 
     /**
@@ -90,7 +127,7 @@ export class RegisterComponent implements OnInit {
      * @returns {AbstractControl}
      */
     get pass(): AbstractControl {
-        return this.registerForm.controls['password']
+        return this.registerForm.get('password')
     }
 
     /**
