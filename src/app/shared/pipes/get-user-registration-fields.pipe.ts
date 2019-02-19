@@ -29,12 +29,12 @@ export class GetUserRegistrationFieldsPipe implements PipeTransform {
         let formFields = {
             birthday: [''],
             gender: ['male'],
-            email: new FormControl(null,
+            email: new FormControl('',
                 {
                     validators: [Validators.required, patternValidator()], updateOn: 'blur'
                 }),
             profile_img:'',
-            file:''
+            // file:''
         };
 
         // Setting additional fields for register-user and edit-profile cases

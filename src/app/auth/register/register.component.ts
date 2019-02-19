@@ -17,6 +17,7 @@ import {GetUserRegistrationFieldsPipe} from "../../shared/pipes/get-user-registr
 import {User} from "../../shared/models/User";
 import {FixMatDatepickerDateFormatPipe} from "../../shared/pipes/fix-mat-datepicker-date-format.pipe";
 import {SetMatDatepickerAdapterLocalePipe} from "../../shared/pipes/set-mat-datepicker-adapter-locale.pipe";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -27,19 +28,21 @@ import {SetMatDatepickerAdapterLocalePipe} from "../../shared/pipes/set-mat-date
 })
 export class RegisterComponent implements OnInit {
 
-    lang = this.getLang.transform();
+    lang: string = this.getLang.transform();
+    formAction: string = this._router.url.includes('register') ? 'register' : 'update';
 
     registerForm: FormGroup;
-    userData:User;
+    userData: User;
     fieldsConfig;
 
     dropzoneConfig: DropzoneConfigInterface;
-    dropzoneFile: File;
+    dropzoneFile = {};
 
 
     constructor(
         private _fb: FormBuilder,
         private _auth: AuthService,
+        private _router: Router,
         private getLang: GetLangPipe,
         private adapter: DateAdapter<any>,
         private getFormFields: GetUserRegistrationFieldsPipe,
@@ -52,14 +55,12 @@ export class RegisterComponent implements OnInit {
 
         // Setting material date picker locale and current form language equal to last saved one
         this.lang = this.getLang.transform();
-        this.setAdapterLang.transform(this.adapter,this.lang);
+        this.setAdapterLang.transform(this.adapter, this.lang);
     }
 
     ngOnInit() {
         this.registerForm = this._fb.group(this.getFormFields.transform())
     }
-
-
 
 
     /**
@@ -72,15 +73,47 @@ export class RegisterComponent implements OnInit {
 
 
         // If registration or profile editing form is valid saving its data to formData object
-        // if (this.registerForm.valid) {
         this._auth.formProcessing = true;
 
-        console.log(this.registerForm.value)
+        let formData: FormData = this.buildFormData();
 
 
+        formData.forEach((value, key) => {
+            console.log(key + " " + value)
+        });
+
+        this._auth[this.formAction](formData).subscribe(dt=>{
+
+        });
 
 
     }
+
+
+    buildFormData() {
+        let formData: FormData = new FormData();
+
+        for (let field in this.registerForm.value) {
+            formData.append(field, this.registerForm.value[field])
+        }
+
+        // If drop zone file exists saving it to formData object as well
+        if (Object.entries(this.dropzoneFile).length != 0) {
+            let file = this.dropzoneFile[0];
+            formData.append('profile_img', file['name']);
+        }
+
+        return formData;
+    }
+
+    /**
+     * Gets selected image file
+     * @param e
+     */
+    onAddedFile(e) {
+        this.dropzoneFile = e;
+    }
+
 
     /**
      * First name field control getter
@@ -98,7 +131,7 @@ export class RegisterComponent implements OnInit {
         return this.registerForm.get(`last_name_${this.lang}`);
     }
 
-    get birthdayField(){
+    get birthdayField() {
         return this.registerForm.get('birthday');
     }
 
