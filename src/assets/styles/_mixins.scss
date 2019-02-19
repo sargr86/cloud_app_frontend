@@ -1,0 +1,237 @@
+@import './variables';
+
+@mixin terminalTitle {
+  color: $dark_gray;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  span {
+    margin-top: -1px;
+    margin-left: 10px;
+  }
+  mat-icon,i {
+    background-color: $dark_gray;
+    color: $white;
+  }
+}
+
+@mixin dropZone {
+  background-color: $dark_gray;
+  .dz-message {
+    border: none !important;
+  }
+  .dz-progress {
+    display: none;
+  }
+  .dz-error-mark {
+    display: none !important;
+  }
+  .dz-remove {
+    position: absolute;
+    top: 183px;
+    left: 190px;
+    z-index: 10;
+    color: transparent;
+    text-decoration: none;
+  }
+  .dz-remove::before {
+    content: "\2715";
+    background-color: $red;
+    color: $white;
+    display: block;
+    font-weight: bold;
+    width: 20px;
+    padding: 0;
+    height: 18px;
+    border-radius: 10px;
+  }
+}
+
+@mixin infoBox {
+  width: 24%;
+  float: left;
+  padding: 60px;
+  .info-sign {
+    color: $dark_gray;
+  }
+  .info-item {
+    color: $dark_gray;
+  }
+  .infoList {
+    list-style: disc !important;
+    color: $dark_gray;
+    padding-left: 34px;
+  }
+}
+
+.userImg {
+  float: right;
+}
+
+/** Button with no border and background **/
+@mixin noBgButton {
+  background: none;
+  border: none;
+  outline: none;
+  color: $white;
+  width: 27px;
+  line-height: 0;
+  padding: 2px 0 0 0;
+  height: 27px;
+  border-radius: 27px;
+  cursor: pointer;
+}
+
+@mixin namedBtn {
+  background-color: #82c644;
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  outline: none;
+
+}
+
+@mixin iconBtn {
+  @include noBgButton;
+  color: $dark_gray;
+  i {
+    font-size: 18px;
+  }
+  &:hover {
+    color: $yellow;
+  }
+}
+
+@mixin controlBtn {
+  background-color: $dark_gray;
+  border: none;
+  outline: none;
+  color: white;
+  cursor: pointer;
+}
+
+@mixin sidebarLinks{
+  li{
+    margin-top: 10px;
+    padding: 5px;
+  }
+}
+
+@mixin circles {
+  position: relative;
+  height: 100vh;
+  .listContainer {
+    width: 100%;
+    position: absolute;
+    bottom: 59px;
+    border-radius: 5px;
+  }
+  ul {
+    background-color: rgba(1, 1, 1, 0.5);
+    overflow: hidden;
+  }
+
+  .mainTitle {
+    color: $white;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 5px;
+  }
+  .item {
+    color: $gray;
+    float: left;
+    margin-left: 20px;
+    padding: 20px;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    .edit {
+      @include noBgButton;
+      text-align: center;
+      z-index: 20;
+      font-size: 14px;
+      color: $silver;
+      margin-left: 5px;
+      margin-top: -15px;
+    }
+
+    .title {
+      font-size: 16px;
+      color: $gray;
+    }
+    .edit:hover {
+      color: $yellow;
+    }
+    .titleContainer {
+      margin-top: -9px;
+      margin-left: 20px;
+
+    }
+
+  }
+  .item:hover {
+    color: $yellow;
+  }
+  .item.story {
+    .number {
+      margin-top: 9px !important;
+    }
+  }
+}
+
+@mixin squares {
+  .mainTitle {
+    color: $darker_gray;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 2px;
+  }
+  .item {
+    width: 150px;
+    height: 150px;
+    background-color: $dark_gray;
+    margin: 20px;
+    padding: 0;
+    float: left;
+    position: relative;
+    display: flex;
+    .edit {
+      @include noBgButton;
+      text-align: center;
+      position: absolute;
+      bottom: 50%;
+      left: 43%;
+      z-index: 20;
+      font-size: 24px;
+      color: $white;
+      cursor: pointer;
+    }
+    .title {
+      font-size: 16px;
+      color: $white;
+      cursor: pointer;
+    }
+
+    .titleContainer {
+      width: 100%;
+      position: absolute;
+      bottom: 10px;
+      text-align: center;
+      left: 0;
+      margin: 0;
+    }
+    .userContainer {
+      text-align: center;
+      width: 100%;
+      height: 20px;
+      background: $green;
+      color: $white;
+      text-transform: uppercase;
+    }
+  }
+}

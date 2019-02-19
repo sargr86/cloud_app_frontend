@@ -1,0 +1,15 @@
+@import "../../../../assets/styles/_variables";
+@import "../../../../assets/styles/_mixins";
+
+.notFoundContainer{
+
+  color: $dark_gray;
+  font-weight: bold;
+  h1{
+    color: $gray;
+  }
+  mat-icon{
+    background-color: $gray;
+    color: $white;
+  }
+}
