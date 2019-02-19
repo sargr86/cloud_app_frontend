@@ -37,9 +37,10 @@ export class RegisterComponent implements OnInit {
     registerForm: FormGroup;
     userData: User;
     fieldsConfig;
+    passHidden: boolean = true;
 
     dropzoneConfig: DropzoneConfigInterface;
-    dropzoneFile = {};
+    dropzoneFile: any = {};
 
 
     constructor(
@@ -62,7 +63,7 @@ export class RegisterComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.registerForm = this._fb.group(this.getFormFields.transform())
+        this.registerForm = this._fb.group(this.getFormFields.transform());
 
         // Getting info box elements for this page
         this.infoBoxData = this.editProfile ? infoBox.profileEdit : infoBox.userRegistration;
@@ -77,15 +78,15 @@ export class RegisterComponent implements OnInit {
         // Fixing birthday value date format to meet our needs
         this.fixDpFormat.transform(this.birthdayField);
 
-
-        // If registration or profile editing form is valid saving its data to formData object
-        this._auth.formProcessing = true;
-
+        // Getting form data object built with the form values and drop zone file
         let formData: FormData = this.buildFormData();
 
-        this._auth[this.formAction](formData).subscribe(dt=>{
+        // if (this.registerForm.valid) {
+        this._auth.formProcessing = true;
+        this._auth[this.formAction](formData).subscribe(dt => {
 
         });
+        // }
 
 
     }
@@ -99,19 +100,22 @@ export class RegisterComponent implements OnInit {
         let formData: FormData = new FormData();
         let formValue = this.registerForm.value;
 
-        for (let field in formValue) {
-            if(field == 'birthday'){
-                if(formValue['birthday']){
-                    formData.append(field, formValue[field])
+        for (let field in this.registerForm.value) {
+            if (field == 'birthday') {
+                if (formValue['birthday']) {
+                    formData.append(field, this.registerForm.value[field])
                 }
             }
-            else formData.append(field, formValue[field])
+            else if (field != 'profile_img') formData.append(field, this.registerForm.value[field])
         }
+
+
 
         // If drop zone file exists saving it to formData object as well
         if (Object.entries(this.dropzoneFile).length != 0) {
             let file = this.dropzoneFile[0];
-            formData.append('profile_img', file['name']);
+            formData.append('profile_img', file,file['name'])
+            // formData.append('profile_img', file['name']);
         }
 
         return formData;
@@ -123,6 +127,13 @@ export class RegisterComponent implements OnInit {
      */
     onAddedFile(e) {
         this.dropzoneFile = e;
+    }
+
+    /**
+     * Toggles password appearance
+     */
+    togglePass() {
+        this.passHidden = !this.passHidden;
     }
 
 
