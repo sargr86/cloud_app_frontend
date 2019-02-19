@@ -4,7 +4,7 @@ let emailPattern: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*
 export function patternValidator(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } => {
     const value = control.value;
-    if (value === '' || value === null) {
+    if (!value) {
       return null;
     }
     return !emailPattern.test(value) ? { 'patternInvalid': { emailPattern } } : null;
