@@ -16,6 +16,7 @@ import {GetLangPipe} from "../../shared/pipes/get-lang.pipe";
 import {GetUserRegistrationFieldsPipe} from "../../shared/pipes/get-user-registration-fields.pipe";
 import {User} from "../../shared/models/User";
 import {FixMatDatepickerDateFormatPipe} from "../../shared/pipes/fix-mat-datepicker-date-format.pipe";
+import {SetMatDatepickerAdapterLocalePipe} from "../../shared/pipes/set-mat-datepicker-adapter-locale.pipe";
 
 
 @Component({
@@ -42,15 +43,16 @@ export class RegisterComponent implements OnInit {
         private getLang: GetLangPipe,
         private adapter: DateAdapter<any>,
         private getFormFields: GetUserRegistrationFieldsPipe,
-        private fixDpFormat: FixMatDatepickerDateFormatPipe
+        private fixDpFormat: FixMatDatepickerDateFormatPipe,
+        private setAdapterLang: SetMatDatepickerAdapterLocalePipe
     ) {
         // Getting form fields and drop zone config
         this.fieldsConfig = fc;
         this.dropzoneConfig = dropzoneConfig.USER_PROFILE_IMG_DROPZONE_CONFIG;
 
-        // Setting current form language equal to last saved one
+        // Setting material date picker locale and current form language equal to last saved one
         this.lang = this.getLang.transform();
-        this.setAdapterLang(this.lang);
+        this.setAdapterLang.transform(this.adapter,this.lang);
     }
 
     ngOnInit() {
@@ -79,20 +81,6 @@ export class RegisterComponent implements OnInit {
 
 
     }
-
-
-
-    /**
-     * Setting date picker locale here
-     * @param lang
-     */
-    setAdapterLang(lang) {
-        this.adapter.setLocale(lang === 'hy' ? 'hy-AM' : lang);
-    }
-
-
-
-
 
     /**
      * First name field control getter

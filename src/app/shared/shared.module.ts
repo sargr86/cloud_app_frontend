@@ -10,6 +10,7 @@ import {DropzoneModule} from "ngx-dropzone-wrapper";
 import { GetImageUrlPipe } from './pipes/get-image-url.pipe';
 import { GetUserRegistrationFieldsPipe } from './pipes/get-user-registration-fields.pipe';
 import { FixMatDatepickerDateFormatPipe } from './pipes/fix-mat-datepicker-date-format.pipe';
+import { SetMatDatepickerAdapterLocalePipe } from './pipes/set-mat-datepicker-adapter-locale.pipe';
 
 @NgModule({
     declarations: [
@@ -18,7 +19,8 @@ import { FixMatDatepickerDateFormatPipe } from './pipes/fix-mat-datepicker-date-
         GetLangPipe,
         GetImageUrlPipe,
         GetUserRegistrationFieldsPipe,
-        FixMatDatepickerDateFormatPipe
+        FixMatDatepickerDateFormatPipe,
+        SetMatDatepickerAdapterLocalePipe
     ],
     imports: [
         CommonModule,
@@ -32,7 +34,8 @@ import { FixMatDatepickerDateFormatPipe } from './pipes/fix-mat-datepicker-date-
         GetLangPipe,
         GetImageUrlPipe,
         GetUserRegistrationFieldsPipe,
-        FixMatDatepickerDateFormatPipe
+        FixMatDatepickerDateFormatPipe,
+        SetMatDatepickerAdapterLocalePipe
     ],
     exports: [
         FormsModule,
