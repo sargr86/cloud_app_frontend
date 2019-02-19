@@ -1,0 +1,40 @@
+.profileImgDropzone {
+  width: 350px;
+  height: 400px;
+  overflow: hidden;
+  @include dropZone;
+
+  .dz-wrapper {
+    overflow: hidden!important;
+    height: 390px!important;
+    .dz-message {
+      height: 384px!important;
+    }
+  }
+}
+
+.flagDropzone {
+  width: 350px;
+  height: 209px;
+  overflow: hidden;
+  @include dropZone;
+
+  .dz-details{
+    height:80px;
+  }
+  .dz-wrapper {
+    overflow: hidden !important;
+    height: 200px !important;
+    .dz-message {
+      height: 200px !important;
+    }
+  }
+  .dz-remove{
+    top:89px;
+  }
+  .dz-image {
+    img {
+      height: 200px!important;
+    }
+  }
+}

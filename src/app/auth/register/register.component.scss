@@ -1,0 +1,58 @@
+@import '../../../assets/styles/variables';
+@import '../../../assets/styles/mixins';
+
+.registerForm {
+  margin-top: 50px;
+  /* Register/ save-user-info button */
+  .userInfo {
+    width: 30%;
+    float: left;
+    .register {
+      @include namedBtn;
+      margin: auto;
+    }
+    .register:disabled {
+      background-color: $gray !important;
+    }
+    .mat-form-field {
+      display: block;
+    }
+    .mat-radio-group {
+      margin: 20px 0;
+      display: block;
+      text-align: center;
+      .mat-radio-button {
+        margin-left: 10px;
+      }
+    }
+    .translate-sign {
+      color: $dark_gray;
+    }
+    /* Password show/hide button (only for register form) */
+    .passToggler {
+      position: absolute;
+      right: 0;
+      top: 5px;
+      color: gray;
+      font-size: 17px;
+      cursor: pointer;
+    }
+  }
+
+  /* User profile image container */
+  .userImg {
+    .profileImg {
+      width: 400px;
+      height: 400px;
+      background-size: cover !important;
+      i {
+        position: absolute;
+        right: 15px;
+        color: $white;
+        font-size: 20px;
+        cursor: pointer;
+      }
+    }
+  }
+
+}

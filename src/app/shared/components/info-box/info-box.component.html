@@ -1,0 +1,8 @@
+<div class="infoBox">
+  <i class="fa fa-info-circle info-sign"></i>
+  <ul class="infoList">
+    <li *ngFor="let el of elements">
+      <small class="info-item" [innerHTML]="el|translate"></small>
+    </li>
+  </ul>
+</div>

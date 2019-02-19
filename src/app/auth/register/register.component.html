@@ -1,6 +1,103 @@
-<h1>OK</h1>
-<form [formGroup]="registerForm" method="post" enctype="multipart/form-data">
-  <input type="file" name="profile-image" (change)="getFile($event)" formControlName="profile_img">
-  <input formControlName="foo">
-  <button (click)="upload()">Upload</button>
-</form>
+<mat-card>
+    <form [formGroup]="registerForm" enctype="multipart/form-data" class="registerForm" *ngIf="registerForm">
+
+        <!-- Register/ profile form title-->
+        <h2 class="terminalTitle">
+            <mat-icon>{{_auth.loggedIn()?'person':'person_add'}}</mat-icon>
+            <span translate>{{_auth.loggedIn()?'profile_terminal':'registration_terminal'}}</span>
+        </h2>
+
+        <!-- User details box -->
+        <div class="userInfo">
+            <!-- First name field -->
+            <mat-form-field>
+                <input matInput [placeholder]="'first_name'|translate:{symbol:'*'}"
+                       [formControlName]="'first_name_'+lang">
+                <mat-hint align="start"><i class="fa fa-globe translate-sign"></i></mat-hint>
+                <mat-hint align="end">{{firstName.value?firstName.value.length:0}} /
+                    {{fieldsConfig.MAX_FIRST_NAME_LEN}}
+                </mat-hint>
+            </mat-form-field>
+            <div *ngIf="firstName.errors && (!firstName.pristine || firstName.touched)" class="error">
+                <div *ngIf="firstName.hasError('required')">{{'first_name_required_error'|translate}}</div>
+                <div *ngIf="firstName.hasError('minlength')||firstName.hasError('maxlength')">
+                    {{'first_name_length_error'|translate}}
+                </div>
+            </div>
+
+            <!-- Last name field -->
+            <mat-form-field>
+                <input matInput [placeholder]="'last_name'|translate:{symbol:'*'}"
+                       [formControlName]="'last_name_'+lang">
+                <mat-hint align="start"><i class="fa fa-globe translate-sign"></i></mat-hint>
+                <mat-hint align="end">{{lastName.value?lastName.value.length:0}} / {{fieldsConfig.MAX_FIRST_NAME_LEN}}
+                </mat-hint>
+            </mat-form-field>
+            <div *ngIf="lastName.errors && (!lastName.pristine || lastName.touched)" class="error">
+                <div *ngIf="lastName.hasError('required')">{{'last_name_required_error'|translate}}</div>
+                <div *ngIf="lastName.hasError('minlength')||lastName.hasError('maxlength')">
+                    {{'last_name_length_error'|translate}}
+                </div>
+            </div>
+
+            <!-- Birthday field -->
+            <mat-form-field>
+                <input matInput [placeholder]="'birthday'|translate:{symbol:''}" name="birthday"
+                       [matDatepicker]="picker" formControlName="birthday">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker startView="year"
+                                [startAt]="fieldsConfig.DATEPICKER_START_DATE"></mat-datepicker>
+            </mat-form-field>
+
+            <!-- Gender field -->
+            <mat-radio-group name="gender" formControlName="gender">
+                <mat-radio-button value="male">{{'male'|translate}}</mat-radio-button>
+                <mat-radio-button value="female">{{'female'|translate}}</mat-radio-button>
+            </mat-radio-group>
+
+            <!-- E-mail field -->
+            <mat-form-field>
+                <input matInput [placeholder]="'email'|translate" formControlName="email">
+            </mat-form-field>
+            <div *ngIf="email.errors && !email.pristine" class="error">
+                <div [hidden]="!email.hasError('required')">{{'email_required_error'|translate}}</div>
+                <div [hidden]="!email.hasError('patternInvalid')">{{'email_invalid_error'|translate}}</div>
+            </div>
+
+            <!-- Password field (shown only in user registration case)-->
+            <ng-container *ngIf="!editProfile">
+                <mat-form-field>
+                    <input [type]="passHidden?'password':'text'" matInput [placeholder]="'password'|translate"
+                           formControlName="password">
+                    <mat-hint align="end">{{pass.value.length}} / {{fieldsConfig.PASS_MAX_LEN}}</mat-hint>
+                    <mat-slide-toggle class="passToggler" (change)="togglePass()"></mat-slide-toggle>
+                </mat-form-field>
+                <div *ngIf="pass.errors && !pass.pristine" class="error">
+                    <div [hidden]="!pass.hasError('required')">{{'password_required_error'|translate}}</div>
+                </div>
+            </ng-container>
+
+            <button type="button" class="register" (click)="register($event)" >
+                <mat-spinner [diameter]="15" *ngIf="_auth.formProcessing"></mat-spinner>
+                {{(editProfile?'save':'register')|translate}}
+            </button>
+            <!-- [disabled]="registerForm.invalid"-->
+        </div>
+
+        <!-- Info box recommendations -->
+        <info-box [elements]="infoBoxData"></info-box>
+
+        <!-- User image or drop zone container-->
+        <div class="userImg">
+            <!-- Showing drop zone for non-authenticated user and for a user without a profile image -->
+            <dropzone [config]="dropzoneConfig" *ngIf="!profileImg"
+                      id="dropzone" class="profileImgDropzone" #dropzone (thumbnail)="onAddedFile($event)"
+                      [message]="'click_drag'|translate" (thumbnail)="onAddedFile($event)">
+            </dropzone>
+
+            <div class="profileImg" *ngIf="profileImg" [style.background]="profileImg|getImgUrl:'users'">
+                <i class="fa fa-times-circle remove-profile-img" (click)="removeImage()"></i>
+            </div>
+        </div>
+    </form>
+</mat-card>
