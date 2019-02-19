@@ -4,6 +4,7 @@ import {AbstractControl, FormBuilder, FormGroup} from "@angular/forms";
 
 import {dpFormats, dpProviders} from '../../shared/constants/datepicker-formats';
 import {DateAdapter} from "@angular/material";
+import * as moment from 'moment';
 
 import * as fc from "../../shared/constants/form_config";
 import {infoBox} from "../../shared/constants/info_box_data";
@@ -114,8 +115,11 @@ export class RegisterComponent implements OnInit {
         // If drop zone file exists saving it to formData object as well
         if (Object.entries(this.dropzoneFile).length != 0) {
             let file = this.dropzoneFile[0];
-            formData.append('profile_img', file,file['name'])
-            // formData.append('profile_img', file['name']);
+            let t = moment();
+            let nameArr = file['name'].split('.');
+            let fileName = `${nameArr[0]}${t}.${nameArr[1]}`;
+            formData.append('profile_img', fileName);
+            formData.append('profile_img_file', file,fileName)
         }
 
         return formData;
