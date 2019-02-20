@@ -1,0 +1,38 @@
+@import '../../../assets/styles/variables';
+@import '../../../assets/styles/mixins';
+
+nav {
+  width: 85vw;
+  margin: auto;
+  padding: 8px;
+  button{
+    @include iconBtn;
+    margin-left:10px;
+    i {
+      font-size: 18px;
+    }
+  }
+
+  .logout {
+    float: right;
+  }
+  .auth {
+    overflow: hidden;
+  }
+  .not-auth{
+    overflow: hidden;
+    padding: 0 10px;
+    button{
+      color:$white;
+    }
+    .leftGroup{
+      width: 50%;
+      float: left;
+    }
+    .rightGroup{
+      float: right;
+    }
+  }
+}
+
+

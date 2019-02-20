@@ -1,0 +1,10 @@
+<ul class="languages" [class.spaced]="router.url.includes('login')||menu">
+  <ng-container *ngFor="let lang of language.supported">
+    <li>
+      <input type="radio" [id]="lang" name="languages">
+      <label [for]="lang">
+        <img [src]="langImage(lang)" (click)="changeLanguage(lang)" [class.selected]="lang==savedLanguage">
+      </label>
+    </li>
+  </ng-container>
+</ul>

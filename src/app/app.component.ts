@@ -3,6 +3,7 @@ import {GetLangPipe} from "./shared/pipes/get-lang.pipe";
 
 import {language} from './shared/constants/language';
 import {TranslateService} from "@ngx-translate/core";
+import {AuthService} from "./shared/services/auth.service";
 
 @Component({
     selector: 'app-root',
@@ -14,7 +15,8 @@ export class AppComponent {
 
     constructor(
         private getLang: GetLangPipe,
-        public translate: TranslateService
+        public translate: TranslateService,
+        public _auth: AuthService
     ) {
         // Setting languages for the app
         translate.addLangs(language.supported);

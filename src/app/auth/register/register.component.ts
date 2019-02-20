@@ -19,7 +19,7 @@ import {GetUserRegistrationFieldsPipe} from "../../shared/pipes/get-user-registr
 import {User} from "../../shared/models/User";
 import {FixMatDatepickerDateFormatPipe} from "../../shared/pipes/fix-mat-datepicker-date-format.pipe";
 import {SetMatDatepickerAdapterLocalePipe} from "../../shared/pipes/set-mat-datepicker-adapter-locale.pipe";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 import RegFields from "../../shared/helpers/get-user-registration-fields";
 import {SaveUserInfoService} from "../../shared/services/save-user-info.service";
@@ -48,8 +48,9 @@ export class RegisterComponent implements OnInit {
 
     constructor(
         private _fb: FormBuilder,
-        private _auth: AuthService,
-        private _router: Router,
+        public _auth: AuthService,
+        public _router: Router,
+        private _route: ActivatedRoute,
         private getLang: GetLangPipe,
         private adapter: DateAdapter<any>,
         private getFormFields: GetUserRegistrationFieldsPipe,
@@ -72,6 +73,31 @@ export class RegisterComponent implements OnInit {
 
         // Getting info box elements for this page
         this.infoBoxData = this.editProfile ? infoBox.profileEdit : infoBox.userRegistration;
+
+        // Setting all the received fields of the form
+        this.setFormFields();
+    }
+
+    /**
+     * Sets the register/profile edit form fields
+     */
+    setFormFields() {
+
+        // Getting route data
+        this._route.data.subscribe(dt => {
+            this.userData = dt.user;
+            if (this.userData) {
+                this.editProfile = true;
+            }
+
+            // Building register form with the received fields
+            this.registerForm = this._fb.group(this.getFormFields.transform(this.editProfile));
+
+            // Setting fields values for edit-profile case
+            if (this.editProfile) {
+                this.registerForm.patchValue(dt.user)
+            }
+        });
     }
 
 
@@ -86,12 +112,13 @@ export class RegisterComponent implements OnInit {
         // Getting form data object built with the form values and drop zone file
         let formData: FormData = this.buildFormData();
 
-        if (this.registerForm.valid) {
+        // if (this.registerForm.valid) {
             this._auth.formProcessing = true;
+            console.log(this.formAction)
             this._auth[this.formAction](formData).subscribe(dt => {
-                this._saveInfo.do(dt);
+                this._saveInfo.do(dt,this.editProfile);
             });
-        }
+        // }
 
 
     }

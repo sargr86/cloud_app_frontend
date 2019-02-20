@@ -1,0 +1,67 @@
+<nav>
+    <!-- Buttons related to non-authenticated users -->
+    <div class="not-auth" *ngIf="!_auth.loggedIn()">
+
+        <div class="leftGroup">
+
+            <!-- Home page button -->
+            <button class="home" (click)="router.navigate(['/'])" *ngIf="router.url!=='/'"
+                    [matTooltip]="'home'|translate">
+                <i class="fa fa-home"></i>
+            </button>
+
+        </div>
+
+        <div class="rightGroup">
+
+            <button [matTooltip]="'countries'|translate" *ngIf="!router.url.includes('countries')"
+                    (click)="router.navigate(['countries'])">
+                <i class="fa fa-flag"></i>
+            </button>
+
+            <!-- Go to login page button -->
+            <button class="login" [matTooltip]="'login'|translate" *ngIf="!router.url.includes('login')"
+                    (click)="router.navigate(['login'])">
+                <i class="fa fa-user"></i>
+            </button>
+
+            <!-- Languages menu toggler button -->
+            <button [matTooltip]="'settings'|translate" class="settings" *ngIf="!router.url.includes('login')">
+                <i class="fa fa-cog" [matMenuTriggerFor]="menu"></i>
+            </button>
+
+            <mat-menu #menu="matMenu" class="languageMenu" xPosition="before">
+                <app-languages [menu]="true"></app-languages>
+            </mat-menu>
+        </div>
+    </div>
+
+    <!-- Buttons related to authenticated users -->
+    <div class="auth" *ngIf="_auth.loggedIn()">
+
+        <!-- Home page button -->
+        <button class="home" (click)="navigateHome()" *ngIf="router.url!=='/'&& pageTitle!='admin_dashboard'"
+                [matTooltip]="'home'|translate">
+            <i class="fa fa-home"></i>
+        </button>
+
+        <!-- User profile editing page redirect button -->
+        <button class="profile" (click)="router.navigate(['profile/'+_auth.userData.id])"
+                [matTooltip]="'profile_terminal'|translate"
+                *ngIf="!router.url.includes('profile')">
+            <i class="fa fa-user"></i>
+        </button>
+
+
+        <!-- Navigate to add-*item page button -->
+        <button (click)="router.navigate([getAddBtnUrl()])" *ngIf="!formPage">
+            <i class="fa fa-plus-square"></i>
+        </button>
+
+
+        <!-- Logout button -->
+        <button (click)="_auth.logout()" class="logout" [matTooltip]="'logout'|translate">
+            <i class="fa fa-sign-out-alt"></i>
+        </button>
+    </div>
+</nav>

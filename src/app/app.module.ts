@@ -17,6 +17,11 @@ import {AuthService} from "./shared/services/auth.service";
 import {JwtModule} from "@auth0/angular-jwt";
 import {RequestInterceptor} from "./shared/helpers/http.interceptor";
 import {SaveUserInfoService} from "./shared/services/save-user-info.service";
+import {LayoutModule} from "./layout/layout.module";
+import {MaterialModule} from "./shared/modules/material.module";
+import {SubjectService} from "./shared/services/subject.service";
+import {UserResolver} from "./shared/resolvers/user-resolver.service";
+import {UsersService} from "./shared/services/users.service";
 
 
 // AoT requires an exported function for factories
@@ -54,7 +59,9 @@ export function tokenGetter() {
                 blacklistedRoutes: ['localhost:3000/auth/']
             }
         }),
-        AuthModule
+        AuthModule,
+        LayoutModule,
+        MaterialModule
     ],
     providers: [
         AuthService,
@@ -63,7 +70,10 @@ export function tokenGetter() {
             useClass: RequestInterceptor,
             multi: true
         },
-        SaveUserInfoService
+        SubjectService,
+        SaveUserInfoService,
+        UsersService,
+        UserResolver
     ],
     bootstrap: [AppComponent]
 })

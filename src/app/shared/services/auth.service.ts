@@ -75,4 +75,13 @@ export class AuthService {
         localStorage.setItem('token', '');
         this.router.navigate(['login']);
     }
+
+    /**
+     * Saves user profile details
+     * @param params
+     * @returns {Observable<User>}
+     */
+    update(params){
+        return this.httpClient.put<User>(`${this.domain}auth/update-profile`, params)
+    }
 }

@@ -4,6 +4,7 @@ import {RegisterComponent} from "./auth/register/register.component";
 import {NotFoundComponent} from "./shared/components/not-found/not-found.component";
 import {LoginComponent} from "./auth/login/login.component";
 import {HomeComponent} from "./auth/home/home.component";
+import {UserResolver} from "./shared/resolvers/user-resolver.service";
 
 const routes: Routes = [
     {
@@ -21,6 +22,16 @@ const routes: Routes = [
     {
         path:'admin',
         loadChildren: './admin/admin.module#AdminModule'
+    },
+    {
+        path: 'profile/:id',
+        component: RegisterComponent,
+        resolve: {
+            user: UserResolver
+        },
+        data: {
+            title: 'profile_terminal'
+        }
     },
     {
         path: '**',
