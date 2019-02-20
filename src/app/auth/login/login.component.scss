@@ -1,0 +1,41 @@
+@import '../../../assets/styles/variables';
+@import '../../../assets/styles/mixins';
+
+.loginForm {
+  width: 20%;
+  top: 50%;
+  position: relative;
+  margin: 100px auto;
+  .loginCard {
+    background-color: $semi_transparent_bg;
+
+    h3 {
+      text-align: center;
+      color: $white;
+    }
+    .mat-form-field {
+      display: block !important;
+    }
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      .loginBtn {
+        @include noBgButton;
+        color: $green;
+        font-size: 30px;
+        display: block;
+        cursor: pointer;
+      }
+      .loginBtn:disabled {
+        color: $gray !important;
+      }
+      .registerBtn {
+        @include noBgButton;
+        color: $green;
+        cursor: pointer;
+        font-size: 20px;
+      }
+    }
+  }
+}
+

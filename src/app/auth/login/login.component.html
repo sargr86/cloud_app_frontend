@@ -1,0 +1,39 @@
+<form [formGroup]="loginForm" class="loginForm">
+  <mat-card class="loginCard">
+    <h3>{{'login'|translate}}</h3>
+
+    <!-- Supported languages list switcher-->
+    <!--<app-languages></app-languages>-->
+
+    <!-- E-mail field-->
+    <mat-form-field>
+      <input matInput [placeholder]="'email'|translate" [formControlName]="'email'">
+    </mat-form-field>
+    <div *ngIf="email.errors && !email.pristine" class="error">
+      <div [hidden]="!email.hasError('required')">{{'email_required_error'|translate}}</div>
+      <div [hidden]="!email.hasError('patternInvalid')">{{'email_invalid_error'|translate}}</div>
+    </div>
+
+    <!-- Password field -->
+    <mat-form-field>
+      <input matInput type="password" [placeholder]="'password'|translate" [formControlName]="'password'">
+    </mat-form-field>
+    <div *ngIf="pass.errors && (!pass.pristine||pass.touched)" class="error">
+      <div [hidden]="!pass.errors.required">{{'password_required_error'|translate}}</div>
+    </div>
+
+    <!-- Login/ navigate-to-register page buttons -->
+    <div class="actions">
+
+      <button class="registerBtn" type="button" [matTooltip]="'register'|translate" (click)="router.navigate(['register'])">
+        <i class="fa fa-user-plus"></i>
+      </button>
+
+      <button class="loginBtn" (click)="login()" [matTooltip]="'login'|translate" [disabled]="!loginForm.valid">
+        <i class="fa fa-check-circle"></i>
+      </button>
+    </div>
+
+
+  </mat-card>
+</form>
