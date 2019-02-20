@@ -54,6 +54,20 @@ export class AuthService {
         return this.httpClient.post<User>(`${this.domain}auth/login`, formData);
     }
 
+
+    /**
+     * Checks current user roles
+     * @param role
+     */
+    checkRoles(role: string) {
+        if (this.loggedIn() && this.userData) {
+            return this.userData.roles.map(r => {
+                return (r['name_en'].toLowerCase().replace(' ', '_') === role);
+            }).some(Boolean)
+        }
+        return false;
+    }
+
     /**
      * Logs out the current user
      */

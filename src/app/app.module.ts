@@ -16,6 +16,7 @@ import {AuthService} from "./shared/services/auth.service";
 
 import {JwtModule} from "@auth0/angular-jwt";
 import {RequestInterceptor} from "./shared/helpers/http.interceptor";
+import {SaveUserInfoService} from "./shared/services/save-user-info.service";
 
 
 
@@ -63,7 +64,8 @@ export function tokenGetter() {
             provide:HTTP_INTERCEPTORS,
             useClass:RequestInterceptor,
             multi:true
-        }
+        },
+        SaveUserInfoService
     ],
     bootstrap: [AppComponent]
 })

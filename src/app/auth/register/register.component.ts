@@ -21,6 +21,8 @@ import {FixMatDatepickerDateFormatPipe} from "../../shared/pipes/fix-mat-datepic
 import {SetMatDatepickerAdapterLocalePipe} from "../../shared/pipes/set-mat-datepicker-adapter-locale.pipe";
 import {Router} from "@angular/router";
 
+import RegFields from "../../shared/helpers/get-user-registration-fields";
+import {SaveUserInfoService} from "../../shared/services/save-user-info.service";
 
 @Component({
     selector: 'app-register',
@@ -52,7 +54,8 @@ export class RegisterComponent implements OnInit {
         private adapter: DateAdapter<any>,
         private getFormFields: GetUserRegistrationFieldsPipe,
         private fixDpFormat: FixMatDatepickerDateFormatPipe,
-        private setAdapterLang: SetMatDatepickerAdapterLocalePipe
+        private setAdapterLang: SetMatDatepickerAdapterLocalePipe,
+        private _saveInfo: SaveUserInfoService
     ) {
         // Getting form fields and drop zone config
         this.fieldsConfig = fc;
@@ -64,7 +67,8 @@ export class RegisterComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.registerForm = this._fb.group(this.getFormFields.transform());
+
+        this.registerForm = this._fb.group(RegFields.get(false));
 
         // Getting info box elements for this page
         this.infoBoxData = this.editProfile ? infoBox.profileEdit : infoBox.userRegistration;
@@ -85,7 +89,7 @@ export class RegisterComponent implements OnInit {
         if (this.registerForm.valid) {
             this._auth.formProcessing = true;
             this._auth[this.formAction](formData).subscribe(dt => {
-
+                this._saveInfo.do(dt);
             });
         }
 
