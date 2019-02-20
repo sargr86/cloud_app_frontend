@@ -110,8 +110,6 @@ export class RegisterComponent implements OnInit {
             else if (field != 'profile_img') formData.append(field, this.registerForm.value[field])
         }
 
-
-
         // If drop zone file exists saving it to formData object as well
         if (Object.entries(this.dropzoneFile).length != 0) {
             let file = this.dropzoneFile[0];

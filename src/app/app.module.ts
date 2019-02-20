@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {BrowserModule} from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
 
 import {AppComponent} from './app.component';
 
@@ -15,6 +15,7 @@ import {AuthModule} from "./auth/auth.module";
 import {AuthService} from "./shared/services/auth.service";
 
 import {JwtModule} from "@auth0/angular-jwt";
+import {RequestInterceptor} from "./shared/helpers/http.interceptor";
 
 
 
@@ -56,7 +57,14 @@ export function tokenGetter() {
         }),
         AuthModule
     ],
-    providers: [AuthService],
+    providers: [
+        AuthService,
+        {
+            provide:HTTP_INTERCEPTORS,
+            useClass:RequestInterceptor,
+            multi:true
+        }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {

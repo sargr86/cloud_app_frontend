@@ -1,15 +1,23 @@
 .profileImgDropzone {
   width: 350px;
-  height: 400px;
+  height: 350px;
   overflow: hidden;
+  margin-top: 35px;
   @include dropZone;
 
   .dz-wrapper {
     overflow: hidden!important;
-    height: 390px!important;
+    height: 342px!important;
     .dz-message {
-      height: 384px!important;
+      height: 342px!important;
     }
+  }
+  .dropzone .dz-preview.dz-image-preview{
+    background-color: transparent;
+  }
+  .dz-remove{
+    top: 145px;
+    left:168px;
   }
 }
 
