@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {BrowserModule} from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
 
 import {AppComponent} from './app.component';
@@ -19,7 +19,6 @@ import {RequestInterceptor} from "./shared/helpers/http.interceptor";
 import {SaveUserInfoService} from "./shared/services/save-user-info.service";
 
 
-
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/languages/', '.json');
@@ -29,7 +28,6 @@ export function createTranslateLoader(http: HttpClient) {
 export function tokenGetter() {
     return localStorage.getItem('token');
 }
-
 
 
 @NgModule({
@@ -61,9 +59,9 @@ export function tokenGetter() {
     providers: [
         AuthService,
         {
-            provide:HTTP_INTERCEPTORS,
-            useClass:RequestInterceptor,
-            multi:true
+            provide: HTTP_INTERCEPTORS,
+            useClass: RequestInterceptor,
+            multi: true
         },
         SaveUserInfoService
     ],
