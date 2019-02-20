@@ -82,12 +82,12 @@ export class RegisterComponent implements OnInit {
         // Getting form data object built with the form values and drop zone file
         let formData: FormData = this.buildFormData();
 
-        // if (this.registerForm.valid) {
-        this._auth.formProcessing = true;
-        this._auth[this.formAction](formData).subscribe(dt => {
+        if (this.registerForm.valid) {
+            this._auth.formProcessing = true;
+            this._auth[this.formAction](formData).subscribe(dt => {
 
-        });
-        // }
+            });
+        }
 
 
     }
@@ -117,7 +117,7 @@ export class RegisterComponent implements OnInit {
             let nameArr = file['name'].split('.');
             let fileName = `${nameArr[0]}${t}.${nameArr[1]}`;
             formData.append('profile_img', fileName);
-            formData.append('profile_img_file', file,fileName)
+            formData.append('profile_img_file', file, fileName)
         }
 
         return formData;
