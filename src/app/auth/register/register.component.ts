@@ -130,6 +130,7 @@ export class RegisterComponent implements OnInit {
     buildFormData() {
         let formData: FormData = new FormData();
         let formValue = this.registerForm.value;
+        let dropFileExist = Object.entries(this.dropzoneFile).length > 0;
 
         for (let field in this.registerForm.value) {
             if (field == 'birthday') {
@@ -137,12 +138,15 @@ export class RegisterComponent implements OnInit {
                     formData.append(field, this.registerForm.value[field])
                 }
             }
-            else if (field != 'profile_img') formData.append(field, this.registerForm.value[field])
+            else if (field!='profile_img'||!dropFileExist)
+                formData.append(field, this.registerForm.value[field])
         }
 
         // If drop zone file exists saving it to formData object as well
-        if (Object.entries(this.dropzoneFile).length != 0) {
+        if (dropFileExist) {
+
             let file = this.dropzoneFile[0];
+
             let t = moment();
             let nameArr = file['name'].split('.');
             let fileName = `${nameArr[0]}${t}.${nameArr[1]}`;
@@ -151,6 +155,15 @@ export class RegisterComponent implements OnInit {
         }
 
         return formData;
+    }
+
+    /**
+     * Removes user profile image
+     */
+    removeImage() {
+        this.userData.profile_img = '';
+        this.dropzoneFile = {};
+        this.registerForm.controls['profile_img'].patchValue('')
     }
 
     /**
