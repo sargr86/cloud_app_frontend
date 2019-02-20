@@ -71,7 +71,7 @@
   "last_name_length_error": "Please use a last name between 2 and 30 characters",
   "first_name_required_error": "First name is required",
   "last_name_required_error": "Last name is required",
-  "full_name_required_error":"Please check your full name, it is required and it's parts have to have 2-30 characters",
+  "full_name_required_error":"Please check your full name, it is required and its parts have to have 2-30 characters",
   "email_exists_error":"A user with such email is already registered",
   "click_drag": "Click or drag an image here for the profile",
   "male": "Male",
