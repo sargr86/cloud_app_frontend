@@ -95,7 +95,7 @@
                       [message]="'click_drag'|translate" (thumbnail)="onAddedFile($event)">
             </dropzone>
 
-            <div class="profileImg" *ngIf="profileImg" [style.background]="profileImg|getImgUrl:'users'">
+            <div class="profileImg" *ngIf="profileImg" [style.background]="profileImg|getImgUrl:'users':true">
                 <i class="fa fa-times-circle remove-profile-img" (click)="removeImage()"></i>
             </div>
         </div>

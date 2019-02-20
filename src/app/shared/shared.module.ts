@@ -12,6 +12,7 @@ import { GetUserRegistrationFieldsPipe } from './pipes/get-user-registration-fie
 import { FixMatDatepickerDateFormatPipe } from './pipes/fix-mat-datepicker-date-format.pipe';
 import { SetMatDatepickerAdapterLocalePipe } from './pipes/set-mat-datepicker-adapter-locale.pipe';
 import { LanguagesComponent } from './components/languages/languages.component';
+import { ReplaceAllPipe } from './pipes/replace-all.pipe';
 
 @NgModule({
     declarations: [
@@ -22,7 +23,8 @@ import { LanguagesComponent } from './components/languages/languages.component';
         GetUserRegistrationFieldsPipe,
         FixMatDatepickerDateFormatPipe,
         SetMatDatepickerAdapterLocalePipe,
-        LanguagesComponent
+        LanguagesComponent,
+        ReplaceAllPipe
     ],
     imports: [
         CommonModule,
@@ -35,6 +37,7 @@ import { LanguagesComponent } from './components/languages/languages.component';
     providers:[
         GetLangPipe,
         GetImageUrlPipe,
+        ReplaceAllPipe,
         GetUserRegistrationFieldsPipe,
         FixMatDatepickerDateFormatPipe,
         SetMatDatepickerAdapterLocalePipe

@@ -114,7 +114,6 @@ export class RegisterComponent implements OnInit {
 
         // if (this.registerForm.valid) {
             this._auth.formProcessing = true;
-            console.log(this.formAction)
             this._auth[this.formAction](formData).subscribe(dt => {
                 this._saveInfo.do(dt,this.editProfile);
             });
