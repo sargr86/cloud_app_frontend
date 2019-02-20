@@ -5,6 +5,7 @@ import {patternValidator} from "../../shared/helpers/pattern-validator";
 import {GetLangPipe} from "../../shared/pipes/get-lang.pipe";
 import {AuthService} from "../../shared/services/auth.service";
 import {SaveUserInfoService} from "../../shared/services/save-user-info.service";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-login',
@@ -16,8 +17,9 @@ export class LoginComponent implements OnInit {
     lang: string = this.getLang.transform();
 
     constructor(
+        public _router: Router,
+        public _auth: AuthService,
         private _fb: FormBuilder,
-        private _auth: AuthService,
         private getLang: GetLangPipe,
         private _saveInfo: SaveUserInfoService
     ) {

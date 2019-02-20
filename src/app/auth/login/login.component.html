@@ -3,7 +3,7 @@
     <h3>{{'login'|translate}}</h3>
 
     <!-- Supported languages list switcher-->
-    <!--<app-languages></app-languages>-->
+    <app-languages></app-languages>
 
     <!-- E-mail field-->
     <mat-form-field>
@@ -25,7 +25,7 @@
     <!-- Login/ navigate-to-register page buttons -->
     <div class="actions">
 
-      <button class="registerBtn" type="button" [matTooltip]="'register'|translate" (click)="router.navigate(['register'])">
+      <button class="registerBtn" type="button" [matTooltip]="'register'|translate" (click)="_router.navigate(['register'])">
         <i class="fa fa-user-plus"></i>
       </button>
 
