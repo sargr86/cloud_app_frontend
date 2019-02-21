@@ -8,6 +8,7 @@ export class SubjectService {
     public language = new Subject<string>();
     public table = new Subject<any>();
     public tableData = new Subject<any>();
+    public pageTitle = new Subject<string>();
 
     constructor() {
     }
@@ -52,6 +53,14 @@ export class SubjectService {
 
     getTableData(): Observable<any> {
         return this.tableData.asObservable();
+    }
+
+    setPageTitle(value){
+        this.pageTitle.next(value)
+    }
+
+    getPageTitle(): Observable<string>{
+        return this.pageTitle.asObservable()
     }
 
 }

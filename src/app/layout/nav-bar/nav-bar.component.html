@@ -40,7 +40,7 @@
     <div class="auth" *ngIf="_auth.loggedIn()">
 
         <!-- Navigate to add-*item page button -->
-        <button (click)="router.navigate([getAddBtnUrl()])" *ngIf="!formPage">
+        <button (click)="router.navigate([getAddBtnUrl()])" *ngIf="!addBtnHide">
             <i class="fa fa-plus-square"></i>
         </button>
 

@@ -8,6 +8,7 @@ import {language} from './shared/constants/language';
 import {TranslateService} from "@ngx-translate/core";
 import {AuthService} from "./shared/services/auth.service";
 import {SubjectService} from "./shared/services/subject.service";
+import {Subscription} from "rxjs/internal/Subscription";
 
 @Component({
     selector: 'app-root',
@@ -16,7 +17,9 @@ import {SubjectService} from "./shared/services/subject.service";
 })
 export class AppComponent {
     savedLang: string = this.getLang.transform();
-    pageTitle:string;
+    pageTitle: string;
+    routeSubscription: Subscription;
+
     constructor(
         private getLang: GetLangPipe,
         public translate: TranslateService,
@@ -36,7 +39,7 @@ export class AppComponent {
         translate.use(this.savedLang);
 
         // Subscribes to system language changes
-        this._subject.getLanguage().subscribe(lang=>{
+        this._subject.getLanguage().subscribe(lang => {
             this.savedLang = lang;
             this.setPageTitle()
         })
@@ -44,9 +47,9 @@ export class AppComponent {
     }
 
 
-    ngOnInit(){
+    ngOnInit() {
         // Getting current page title
-        this.router.events.pipe(map(() => {
+       this.routeSubscription = this.router.events.pipe(map(() => {
             let child = this.route.firstChild;
             while (child) {
                 if (child.firstChild) {
@@ -61,18 +64,23 @@ export class AppComponent {
         })).subscribe(title => {
             this.pageTitle = title;
             this.setPageTitle();
+            this._subject.setPageTitle(title)
         });
     }
 
     /**
      * Sets current page title
      */
-    setPageTitle(){
-        if(this.pageTitle){
+    setPageTitle() {
+        if (this.pageTitle) {
             this.translate.get(this.pageTitle).subscribe(t => {
                 this._title.setTitle(t);
             })
         }
+    }
+
+    ngOnDestroy() {
+        this.routeSubscription.unsubscribe();
     }
 
 }

@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import { NavigationEnd, Router} from "@angular/router";
+import {NavigationEnd, Router} from "@angular/router";
 import {SubjectService} from "../../shared/services/subject.service";
 import {GetLangPipe} from "../../shared/pipes/get-lang.pipe";
 import {AuthService} from "../../shared/services/auth.service";
+import {Subscription} from "rxjs/internal/Subscription";
 
 @Component({
     selector: 'nav-bar',
@@ -10,16 +11,22 @@ import {AuthService} from "../../shared/services/auth.service";
     styleUrls: ['./nav-bar.component.scss']
 })
 export class NavBarComponent implements OnInit {
-    pageTitle: string = '';
     lang: string = this.getLang.transform();
-    routeSubscription;
+    routeSubscription: Subscription;
+    pageTitle:string;
 
     constructor(
         public router: Router,
         public  _auth: AuthService,
         private subject: SubjectService,
-        private getLang: GetLangPipe
+        private getLang: GetLangPipe,
     ) {
+
+        // Getting current title from title/subject service
+        this.subject.getPageTitle().subscribe(title=>{
+            this.pageTitle = title;
+        });
+
 
         this.subject.getLanguage().subscribe(lang => {
             this.lang = lang;
@@ -29,9 +36,6 @@ export class NavBarComponent implements OnInit {
     ngOnInit() {
         this.routeSubscription = this.router.events.subscribe(event => {
             if (event instanceof NavigationEnd) {
-                // console.log(event)
-                // let data = event.snapshot.data;
-                // this.pageTitle = data.title;
 
             }
         });
@@ -49,10 +53,10 @@ export class NavBarComponent implements OnInit {
      * Checks to see if we're on a form editing/saving page
      * @returns {any}
      */
-    get formPage() {
-        let routerUrl = this.router.url;
-        return (routerUrl.includes('edit') || routerUrl.includes('add'))
-            || routerUrl=='/admin' || routerUrl.includes('profile')||routerUrl.includes('users');
+    get addBtnHide() {
+        let url = this.router.url;
+
+        return (/profile|users|edit|add/.test(url) || this.pageTitle == 'admin_dashboard');
     }
 
     ngOnDestroy() {
