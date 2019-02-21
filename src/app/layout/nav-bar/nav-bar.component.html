@@ -14,11 +14,6 @@
 
         <div class="rightGroup">
 
-            <button [matTooltip]="'countries'|translate" *ngIf="!router.url.includes('countries')"
-                    (click)="router.navigate(['countries'])">
-                <i class="fa fa-flag"></i>
-            </button>
-
             <!-- Go to login page button -->
             <button class="login" [matTooltip]="'login'|translate" *ngIf="!router.url.includes('login')"
                     (click)="router.navigate(['login'])">
@@ -26,7 +21,7 @@
             </button>
 
             <!-- Languages menu toggler button -->
-            <button [matTooltip]="'settings'|translate" class="settings" *ngIf="!router.url.includes('login')">
+            <button [matTooltip]="'settings'|translate" class="settings" *ngIf="showSettings">
                 <i class="fa fa-cog" [matMenuTriggerFor]="menu"></i>
             </button>
 
@@ -40,7 +35,7 @@
     <div class="auth" *ngIf="_auth.loggedIn()">
 
         <!-- Navigate to add-*item page button -->
-        <button (click)="router.navigate([getAddBtnUrl()])" *ngIf="!addBtnHide">
+        <button (click)="router.navigate([getAddBtnUrl()])" *ngIf="addBtnShow">
             <i class="fa fa-plus-square"></i>
         </button>
 

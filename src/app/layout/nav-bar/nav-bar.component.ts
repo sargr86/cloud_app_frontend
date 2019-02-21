@@ -50,11 +50,19 @@ export class NavBarComponent implements OnInit {
     }
 
     /**
-     * Checks to see if we're on a form editing/saving page
+     * Checks to see if we're on a form editing/saving/users page to toggle add-button
      * @returns {any}
      */
-    get addBtnHide() {
-        return (/profile|users|edit|add/.test(this.router.url) || this.pageTitle == 'admin_dashboard');
+    get addBtnShow() {
+        return !(/profile|users|edit|add/.test(this.router.url) || this.pageTitle == 'admin_dashboard');
+    }
+
+    /**
+     *
+     * @returns {boolean}
+     */
+    get showSettings(){
+        return !(/login|profile|register/.test(this.router.url));
     }
 
     ngOnDestroy() {
