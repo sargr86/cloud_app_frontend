@@ -27,7 +27,7 @@ export class NavBarComponent implements OnInit {
             this.pageTitle = title;
         });
 
-
+        // Getting system current language if changed by language component
         this.subject.getLanguage().subscribe(lang => {
             this.lang = lang;
         })
@@ -54,9 +54,7 @@ export class NavBarComponent implements OnInit {
      * @returns {any}
      */
     get addBtnHide() {
-        let url = this.router.url;
-
-        return (/profile|users|edit|add/.test(url) || this.pageTitle == 'admin_dashboard');
+        return (/profile|users|edit|add/.test(this.router.url) || this.pageTitle == 'admin_dashboard');
     }
 
     ngOnDestroy() {

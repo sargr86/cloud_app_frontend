@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
         // Defining login form fields
         this.loginForm = this._fb.group({
             email: new FormControl(null, {
-                validators: [Validators.required, patternValidator()], updateOn: 'blur'
+                validators: [Validators.required, patternValidator()]
             }),
             password: ['', Validators.required],
             lang: [this.lang as string]

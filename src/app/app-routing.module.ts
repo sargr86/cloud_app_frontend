@@ -5,6 +5,9 @@ import {NotFoundComponent} from "./shared/components/not-found/not-found.compone
 import {LoginComponent} from "./auth/login/login.component";
 import {HomeComponent} from "./auth/home/home.component";
 import {UserResolver} from "./shared/resolvers/user-resolver.service";
+import {NonAuthGuard} from "./shared/guards/non-auth.guard";
+import {AuthGuard} from "./shared/guards/auth.guard";
+import {RoleGuard} from "./shared/guards/role.guard";
 
 const routes: Routes = [
     {
@@ -19,14 +22,16 @@ const routes: Routes = [
         component: RegisterComponent,
         data:{
             title:'registration_terminal'
-        }
+        },
+        canActivate:[NonAuthGuard]
     },
     {
         path:'login',
         component: LoginComponent,
         data:{
             title:'login'
-        }
+        },
+        canActivate:[NonAuthGuard]
     },
     {
         path:'admin',
@@ -34,7 +39,8 @@ const routes: Routes = [
         data: {
             expectedRole: 'admin',
 
-        }
+        },
+        canActivate: [AuthGuard, RoleGuard],
     },
     {
         path: 'profile/:id',
@@ -44,7 +50,8 @@ const routes: Routes = [
         },
         data: {
             title: 'profile_terminal'
-        }
+        },
+        canActivate: [AuthGuard]
     },
     {
         path: '**',

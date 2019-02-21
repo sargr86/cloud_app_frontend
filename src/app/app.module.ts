@@ -22,6 +22,9 @@ import {MaterialModule} from "./shared/modules/material.module";
 import {SubjectService} from "./shared/services/subject.service";
 import {UserResolver} from "./shared/resolvers/user-resolver.service";
 import {UsersService} from "./shared/services/users.service";
+import {AuthGuard} from "./shared/guards/auth.guard";
+import {NonAuthGuard} from "./shared/guards/non-auth.guard";
+import {RoleGuard} from "./shared/guards/role.guard";
 
 
 // AoT requires an exported function for factories
@@ -73,7 +76,10 @@ export function tokenGetter() {
         SubjectService,
         SaveUserInfoService,
         UsersService,
-        UserResolver
+        UserResolver,
+        AuthGuard,
+        NonAuthGuard,
+        RoleGuard
     ],
     bootstrap: [AppComponent]
 })
