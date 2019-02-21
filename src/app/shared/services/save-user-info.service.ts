@@ -20,9 +20,10 @@ export class SaveUserInfoService {
      * Saves authenticated user data
      * @param dt
      * @param edit
+     * @param login
      * @returns {any}
      */
-    do(dt, edit = false) {
+    do(dt, edit = false,login = false) {
         this._auth.formProcessing = false;
 
         if (!edit) {
@@ -40,10 +41,12 @@ export class SaveUserInfoService {
         // Navigate to the home page
         this.router.navigate([this._auth.checkRoles('admin') ? 'admin' : '/']);
 
+        if(!login){
+            this.translate.get(!edit?'welcome_to_team':'profile_info_updated').subscribe(tr => {
+                this.toastr.success(tr)
+            })
+        }
 
-        this.translate.get(!edit?'welcome_to_team':'profile_info_updated').subscribe(tr => {
-            this.toastr.success(tr)
-        })
 
 
     }

@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
 
     login(){
         this._auth.login(this.loginForm.value).subscribe(dt => {
-            this._saveInfo.do(dt);
+            this._saveInfo.do(dt,false,true);
         })
     }
 

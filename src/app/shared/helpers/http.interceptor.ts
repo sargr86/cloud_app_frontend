@@ -50,15 +50,22 @@ export class RequestInterceptor implements HttpInterceptor {
                     default:
                         let name = '';
                         let msg = '';
+                        let original = err.error.original;
                         if (!err.error.hasOwnProperty('name')) {
+
                             name = err.error;
                         }
                         else {
                             name = err.error.name;
-                            let msg = err.error.original;
-                            if (msg) msg = msg.sqlMessage;
-                        }
+                            if (original.hasOwnProperty('sqlMessage')) msg = original.sqlMessage;
 
+                            // MySQL isn't connected error
+                            if(name.includes('SequelizeConnectionRefusedError')){
+                                name = 'db_connection_issues';
+                                msg = 'check_mysql_connection';
+                            }
+
+                        }
                         this.translate.get([msg, name]).subscribe(d => {
                             this.toastr.error(d[msg], d[name]);
                         });

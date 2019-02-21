@@ -2,9 +2,9 @@
 @import "../../../../assets/styles/_mixins";
 
 .notFoundContainer{
-
   color: $dark_gray;
   font-weight: bold;
+  text-align: center;
   h1{
     color: $gray;
   }

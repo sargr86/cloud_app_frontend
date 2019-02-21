@@ -7,7 +7,7 @@ const routes: Routes = [
         path: '',
         component: DashboardComponent,
         data:{
-            title:'home'
+            title: 'admin_dashboard'
         }
     },
 ];

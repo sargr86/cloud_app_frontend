@@ -2,7 +2,7 @@
 <nav-bar class="navBarContainer" *ngIf="_auth.loggedIn()"></nav-bar>
 
 
-<mat-sidenav-container>
+<mat-sidenav-container [class.grayBg]="!_auth.loggedIn()">
     <mat-sidenav mode="side" #sidenav opened class="mat-elevation-z8" *ngIf=" _auth.loggedIn()">
         <cat-bar></cat-bar>
     </mat-sidenav>

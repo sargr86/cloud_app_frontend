@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
+import {ActivatedRoute, ActivationEnd, NavigationEnd, Router} from "@angular/router";
 import {AuthService} from "../../shared/services/auth.service";
 
 @Component({
@@ -9,20 +9,28 @@ import {AuthService} from "../../shared/services/auth.service";
 })
 export class RightSidebarComponent implements OnInit {
 
+    currentUrl:string;
     constructor(
         public router: Router,
-        public _auth: AuthService
+        public _auth: AuthService,
+        private route: ActivatedRoute
     ) {
     }
 
     ngOnInit() {
+      this.router.events.subscribe(dt=>{
+        if(dt instanceof NavigationEnd){
+            this.currentUrl = dt.url;
+        }
+      })
+
     }
 
     /**
      * Navigates to home page or admin dashboard based on role
      */
     navigateHome() {
-        this.router.navigate([this._auth.checkRoles('admin') ? 'admin' : '/'])
+        this.router.navigate([this._auth.checkRoles('admin') ? '/admin' : '/'])
     }
 
     /**

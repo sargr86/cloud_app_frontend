@@ -9,19 +9,32 @@ import {UserResolver} from "./shared/resolvers/user-resolver.service";
 const routes: Routes = [
     {
         path:'',
-        component:HomeComponent
+        component:HomeComponent,
+        data:{
+            title:'home'
+        }
     },
     {
         path: 'register',
-        component: RegisterComponent
+        component: RegisterComponent,
+        data:{
+            title:'registration_terminal'
+        }
     },
     {
         path:'login',
-        component: LoginComponent
+        component: LoginComponent,
+        data:{
+            title:'login'
+        }
     },
     {
         path:'admin',
-        loadChildren: './admin/admin.module#AdminModule'
+        loadChildren: './admin/admin.module#AdminModule',
+        data: {
+            expectedRole: 'admin',
+
+        }
     },
     {
         path: 'profile/:id',

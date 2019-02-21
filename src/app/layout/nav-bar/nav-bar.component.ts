@@ -34,18 +34,11 @@ export class NavBarComponent implements OnInit {
     }
 
     /**
-     * Navigates to home page or admin dashboard based on user role
-     */
-    navigateHome() {
-        this.router.navigate([this._auth.checkRoles('admin') ? 'admin' : '/'])
-    }
-
-    /**
      * Gets url for add-*item button
      * @returns {string}
      */
     getAddBtnUrl() {
-        return `admin/${this.router.url}/add`;
+        return `/admin/${this.router.url}/add`;
     }
 
     /**
