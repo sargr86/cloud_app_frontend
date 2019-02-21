@@ -22,7 +22,7 @@ export class SaveUserInfoService {
      * @param edit
      * @returns {any}
      */
-    do(dt, edit) {
+    do(dt, edit = false) {
         this._auth.formProcessing = false;
 
         if (!edit) {
