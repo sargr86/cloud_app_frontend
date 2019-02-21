@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {DashboardComponent} from "./dashboard/dashboard.component";
+import {ShowUsersComponent} from "../users/show-users/show-users.component";
 
 const routes: Routes = [
     {
@@ -10,6 +11,13 @@ const routes: Routes = [
             title: 'admin_dashboard'
         }
     },
+    {
+        path:'users',
+        component:ShowUsersComponent,
+        data:{
+            title:'users_terminal'
+        }
+    }
 ];
 
 @NgModule({

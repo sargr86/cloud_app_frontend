@@ -57,7 +57,7 @@ export class RequestInterceptor implements HttpInterceptor {
                         }
                         else {
                             name = err.error.name;
-                            if (original.hasOwnProperty('sqlMessage')) msg = original.sqlMessage;
+                            if (original && original.hasOwnProperty('sqlMessage')) msg = original.sqlMessage;
 
                             // MySQL isn't connected error
                             if(name.includes('SequelizeConnectionRefusedError')){

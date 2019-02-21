@@ -13,6 +13,8 @@ import { FixMatDatepickerDateFormatPipe } from './pipes/fix-mat-datepicker-date-
 import { SetMatDatepickerAdapterLocalePipe } from './pipes/set-mat-datepicker-adapter-locale.pipe';
 import { LanguagesComponent } from './components/languages/languages.component';
 import { ReplaceAllPipe } from './pipes/replace-all.pipe';
+import { MaterialReusableTableComponent } from './components/material-reusable-table/material-reusable-table.component';
+import { GetMatTableDataSourcePipe } from './pipes/get-mat-table-data-source.pipe';
 
 @NgModule({
     declarations: [
@@ -24,7 +26,9 @@ import { ReplaceAllPipe } from './pipes/replace-all.pipe';
         FixMatDatepickerDateFormatPipe,
         SetMatDatepickerAdapterLocalePipe,
         LanguagesComponent,
-        ReplaceAllPipe
+        ReplaceAllPipe,
+        MaterialReusableTableComponent,
+        GetMatTableDataSourcePipe
     ],
     imports: [
         CommonModule,
@@ -40,7 +44,8 @@ import { ReplaceAllPipe } from './pipes/replace-all.pipe';
         ReplaceAllPipe,
         GetUserRegistrationFieldsPipe,
         FixMatDatepickerDateFormatPipe,
-        SetMatDatepickerAdapterLocalePipe
+        SetMatDatepickerAdapterLocalePipe,
+        GetMatTableDataSourcePipe
     ],
     exports: [
         FormsModule,
@@ -50,6 +55,7 @@ import { ReplaceAllPipe } from './pipes/replace-all.pipe';
         DropzoneModule,
         InfoBoxComponent,
         LanguagesComponent,
+        MaterialReusableTableComponent,
         GetLangPipe,
         GetImageUrlPipe,
     ]

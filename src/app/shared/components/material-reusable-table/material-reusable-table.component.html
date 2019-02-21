@@ -1,0 +1,38 @@
+<table mat-table [dataSource]="dataSrc" class="mat-elevation-z8">
+  <ng-container *ngFor="let col of cols">
+    <ng-container matColumnDef="{{col}}">
+      <th mat-header-cell *matHeaderCellDef [textContent]="col|translate:{symbol:''}"></th>
+      <td mat-cell *matCellDef="let el">
+
+        <!-- Image cell-->
+        <ng-container *ngIf="col.includes('img')&& el[col];else textValues">
+          <div class="imgContainer">
+            <div [style.background]="el[col]|getImgUrl:'users':true" class="img"></div>
+          </div>
+        </ng-container>
+
+        <!-- Regular text values -->
+        <ng-template #textValues>
+          <ng-container *ngIf="col.includes('status');else regularValues">
+            <p class="status {{el[col]['name_en']}}">{{el[col]['name_'+lang]}}</p>
+          </ng-container>
+
+          <ng-template #regularValues>
+            {{el[col]|translate}}
+          </ng-template>
+        </ng-template>
+
+        <!-- Action buttons -->
+        <ng-container *ngIf="col=='actions'">
+          <mat-slide-toggle class="statusToggler" [checked]="el.users_status.name_en=='active'"
+                            (change)="changeStatus($event,el.id)"></mat-slide-toggle>
+        </ng-container>
+      </td>
+    </ng-container>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="cols"></tr>
+  <tr mat-row *matRowDef="let row; columns: cols;"></tr>
+</table>
+<mat-paginator [pageSizeOptions]="[3, 10, 20]"
+               showFirstLastButtons></mat-paginator>
