@@ -1,7 +1,7 @@
 <div class="rightSidebarContainer">
-    <ul class="sidebarLinks" *ngIf="currentUrl">
+    <ul class="sidebarLinks">
         <!-- Home page button -->
-        <li *ngIf="router.url!=='/' &&  currentUrl!='/admin'">
+        <li *ngIf="router.url!=='/' &&  router.url!=='/admin'">
             <button class="home" (click)="navigateHome()"[matTooltip]="'home'|translate">
                 <i class="fa fa-home"></i>
             </button>

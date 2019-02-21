@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, ActivationEnd, NavigationEnd, Router} from "@angular/router";
 import {AuthService} from "../../shared/services/auth.service";
+import {SubjectService} from "../../shared/services/subject.service";
 
 @Component({
     selector: 'right-sidebar',
@@ -9,20 +10,22 @@ import {AuthService} from "../../shared/services/auth.service";
 })
 export class RightSidebarComponent implements OnInit {
 
-    currentUrl:string;
+    pageTitle: string;
+
     constructor(
         public router: Router,
         public _auth: AuthService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private subject: SubjectService
     ) {
+
+        // Getting current title from title/subject service
+        this.subject.getPageTitle().subscribe(title => {
+            this.pageTitle = title;
+        });
     }
 
     ngOnInit() {
-      this.router.events.subscribe(dt=>{
-        if(dt instanceof NavigationEnd){
-            this.currentUrl = dt.url;
-        }
-      })
 
     }
 
@@ -39,7 +42,7 @@ export class RightSidebarComponent implements OnInit {
      */
     get formPage() {
         let routerUrl = this.router.url;
-        return (routerUrl.includes('edit') || routerUrl.includes('add')||routerUrl.includes('profile'));
+        return (routerUrl.includes('edit') || routerUrl.includes('add') || routerUrl.includes('profile'));
     }
 
 }
