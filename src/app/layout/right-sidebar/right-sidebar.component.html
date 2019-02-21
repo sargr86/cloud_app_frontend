@@ -1,0 +1,48 @@
+<div class="rightSidebarContainer">
+    <ul class="sidebarLinks">
+
+        <!-- Home page button -->
+        <li *ngIf="router.url!=='/'&& pageTitle!='admin_dashboard'">
+            <button class="home" (click)="navigateHome()"[matTooltip]="'home'|translate">
+                <i class="fa fa-home"></i>
+            </button>
+        </li>
+
+
+        <!-- User profile editing page redirect button -->
+        <li *ngIf="!router.url.includes('profile')">
+            <button class="profile" (click)="router.navigate(['profile/'+_auth.userData.id])"
+                    [matTooltip]="'profile_terminal'|translate">
+                <i class="fa fa-user"></i>
+            </button>
+        </li>
+
+        <!-- Show users button -->
+        <li *ngIf="!router.url.includes('users')&&_auth.checkRoles('admin')">
+            <button class="users" [matTooltip]="'users_terminal'|translate" (click)="router.navigate(['admin/users'])">
+                <i class="fa fa-users"></i>
+            </button>
+        </li>
+
+        <!-- Show countries link -->
+        <li *ngIf="!router.url.includes('countries')">
+            <button [matTooltip]="'countries'|translate" [matTooltipPosition]="'left'"
+                    (click)="router.navigate(['countries'])">
+                <i class="fa fa-flag"></i>
+            </button>
+        </li>
+
+        <!-- Languages menu toggler button with its menu -->
+        <li *ngIf="!formPage">
+            <button [matTooltip]="'settings'|translate" [matTooltipPosition]="'left'">
+                <i class="fa fa-cog" [matMenuTriggerFor]="menu"></i>
+            </button>
+
+            <mat-menu #menu="matMenu" class="languageMenu" xPosition="before">
+                <app-languages [menu]="true"></app-languages>
+            </mat-menu>
+        </li>
+    </ul>
+
+
+</div>

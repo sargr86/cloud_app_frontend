@@ -39,20 +39,6 @@
     <!-- Buttons related to authenticated users -->
     <div class="auth" *ngIf="_auth.loggedIn()">
 
-        <!-- Home page button -->
-        <button class="home" (click)="navigateHome()" *ngIf="router.url!=='/'&& pageTitle!='admin_dashboard'"
-                [matTooltip]="'home'|translate">
-            <i class="fa fa-home"></i>
-        </button>
-
-        <!-- User profile editing page redirect button -->
-        <button class="profile" (click)="router.navigate(['profile/'+_auth.userData.id])"
-                [matTooltip]="'profile_terminal'|translate"
-                *ngIf="!router.url.includes('profile')">
-            <i class="fa fa-user"></i>
-        </button>
-
-
         <!-- Navigate to add-*item page button -->
         <button (click)="router.navigate([getAddBtnUrl()])" *ngIf="!formPage">
             <i class="fa fa-plus-square"></i>
