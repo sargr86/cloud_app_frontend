@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivationEnd, Router} from "@angular/router";
+import { NavigationEnd, Router} from "@angular/router";
 import {SubjectService} from "../../shared/services/subject.service";
 import {GetLangPipe} from "../../shared/pipes/get-lang.pipe";
 import {AuthService} from "../../shared/services/auth.service";
@@ -12,6 +12,7 @@ import {AuthService} from "../../shared/services/auth.service";
 export class NavBarComponent implements OnInit {
     pageTitle: string = '';
     lang: string = this.getLang.transform();
+    routeSubscription;
 
     constructor(
         public router: Router,
@@ -19,18 +20,21 @@ export class NavBarComponent implements OnInit {
         private subject: SubjectService,
         private getLang: GetLangPipe
     ) {
-        this.router.events.subscribe(event => {
-            if (event instanceof ActivationEnd) {
-                let data = event.snapshot.data;
-                this.pageTitle = data.title;
-            }
-        });
+
         this.subject.getLanguage().subscribe(lang => {
             this.lang = lang;
         })
     }
 
     ngOnInit() {
+        this.routeSubscription = this.router.events.subscribe(event => {
+            if (event instanceof NavigationEnd) {
+                // console.log(event)
+                // let data = event.snapshot.data;
+                // this.pageTitle = data.title;
+
+            }
+        });
     }
 
     /**
@@ -48,6 +52,10 @@ export class NavBarComponent implements OnInit {
     get formPage() {
         let routerUrl = this.router.url;
         return (routerUrl.includes('edit') || routerUrl.includes('add'))
-            || this.pageTitle == 'admin_dashboard' || this.pageTitle == 'profile_terminal';
+            || routerUrl=='/admin' || routerUrl.includes('profile')||routerUrl.includes('users');
+    }
+
+    ngOnDestroy() {
+        this.routeSubscription.unsubscribe();
     }
 }
