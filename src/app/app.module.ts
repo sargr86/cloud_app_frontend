@@ -2,29 +2,30 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 
 import {AppComponent} from './app.component';
 
 // Toastr & Translate modules
-import {ToastrModule} from "ngx-toastr";
-import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
-import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import {ToastrModule} from 'ngx-toastr';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
-import {AuthModule} from "./auth/auth.module";
-import {AuthService} from "./shared/services/auth.service";
+import {AuthModule} from './auth/auth.module';
+import {AuthService} from './shared/services/auth.service';
 
-import {JwtModule} from "@auth0/angular-jwt";
-import {RequestInterceptor} from "./shared/helpers/http.interceptor";
-import {SaveUserInfoService} from "./shared/services/save-user-info.service";
-import {LayoutModule} from "./layout/layout.module";
-import {MaterialModule} from "./shared/modules/material.module";
-import {SubjectService} from "./shared/services/subject.service";
-import {UserResolver} from "./shared/resolvers/user-resolver.service";
-import {UsersService} from "./shared/services/users.service";
-import {AuthGuard} from "./shared/guards/auth.guard";
-import {NonAuthGuard} from "./shared/guards/non-auth.guard";
-import {RoleGuard} from "./shared/guards/role.guard";
+import {JwtModule} from '@auth0/angular-jwt';
+import {RequestInterceptor} from './shared/helpers/http.interceptor';
+import {SaveUserInfoService} from './shared/services/save-user-info.service';
+import {LayoutModule} from './layout/layout.module';
+import {MaterialModule} from './shared/modules/material.module';
+import {SubjectService} from './shared/services/subject.service';
+import {UserResolver} from './shared/resolvers/user-resolver.service';
+import {UsersService} from './shared/services/users.service';
+import {AuthGuard} from './shared/guards/auth.guard';
+import {NonAuthGuard} from './shared/guards/non-auth.guard';
+import {RoleGuard} from './shared/guards/role.guard';
+import {FilesModule} from './files/files.module';
 
 
 // AoT requires an exported function for factories
@@ -46,6 +47,7 @@ export function tokenGetter() {
         BrowserModule,
         AppRoutingModule,
         HttpClientModule,
+        FilesModule,
         BrowserAnimationsModule,
         ToastrModule.forRoot({disableTimeOut: false}),
         TranslateModule.forRoot({

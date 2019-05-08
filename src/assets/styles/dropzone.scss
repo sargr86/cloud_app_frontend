@@ -6,18 +6,32 @@
   @include dropZone;
 
   .dz-wrapper {
-    overflow: hidden!important;
-    height: 342px!important;
+    overflow: hidden !important;
+    height: 342px !important;
+
     .dz-message {
-      height: 342px!important;
+      height: 342px !important;
     }
   }
-  .dropzone .dz-preview.dz-image-preview{
+
+  .dropzone .dz-preview.dz-image-preview {
     background-color: transparent;
   }
-  .dz-remove{
+
+  .dz-remove {
     top: 145px;
-    left:168px;
+    left: 168px;
+  }
+}
+
+.importFilesDropzone {
+  width: 500px;
+  height: 350px;
+  overflow: hidden;
+
+  .dz-wrapper, .dz-message {
+    height: 97%;
+    overflow: hidden !important;
   }
 }
 
@@ -27,22 +41,26 @@
   overflow: hidden;
   @include dropZone;
 
-  .dz-details{
-    height:80px;
+  .dz-details {
+    height: 80px;
   }
+
   .dz-wrapper {
     overflow: hidden !important;
     height: 200px !important;
+
     .dz-message {
       height: 200px !important;
     }
   }
-  .dz-remove{
-    top:89px;
+
+  .dz-remove {
+    top: 89px;
   }
+
   .dz-image {
     img {
-      height: 200px!important;
+      height: 200px !important;
     }
   }
 }

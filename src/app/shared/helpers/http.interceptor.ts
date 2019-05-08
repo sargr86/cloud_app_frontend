@@ -46,7 +46,16 @@ export class RequestInterceptor implements HttpInterceptor {
                             this.toastr.error(dt)
                         });
                         break;
-                    //Sequelize & other errors
+                    case 424:
+                        this.translate.get([err.error.msg]).subscribe((dt) => {
+                            console.log(err.error.files)
+                            this.toastr.error(err.error.files, dt['invalid_file_type'], {
+                                enableHtml: true,
+                                disableTimeOut: true
+                            });
+                        });
+                        break;
+                    // Sequelize & other errors
                     default:
                         let name = '';
                         let msg = '';
@@ -54,13 +63,12 @@ export class RequestInterceptor implements HttpInterceptor {
                         if (!err.error.hasOwnProperty('name')) {
 
                             name = err.error;
-                        }
-                        else {
+                        } else {
                             name = err.error.name;
                             if (original && original.hasOwnProperty('sqlMessage')) msg = original.sqlMessage;
 
                             // MySQL isn't connected error
-                            if(name.includes('SequelizeConnectionRefusedError')){
+                            if (name.includes('SequelizeConnectionRefusedError')) {
                                 name = 'db_connection_issues';
                                 msg = 'check_mysql_connection';
                             }

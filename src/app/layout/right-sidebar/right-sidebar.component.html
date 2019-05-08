@@ -2,7 +2,7 @@
     <ul class="sidebarLinks">
         <!-- Home page button -->
         <li *ngIf="router.url!=='/' &&  router.url!=='/admin'">
-            <button class="home" (click)="navigateHome()"[matTooltip]="'home'|translate">
+            <button class="home" (click)="navigateHome()" [matTooltip]="'home'|translate">
                 <i class="fa fa-home"></i>
             </button>
         </li>
@@ -23,6 +23,13 @@
             </button>
         </li>
 
+        <!-- Show documents button -->
+        <li>
+            <button (click)="router.navigate(['files'])">
+                <i class="fa fa-file"></i>
+            </button>
+        </li>
+
         <!-- Languages menu toggler button with its menu -->
         <li *ngIf="!formPage">
             <button [matTooltip]="'settings'|translate" [matTooltipPosition]="'left'">
@@ -30,7 +37,7 @@
             </button>
 
             <mat-menu #menu="matMenu" class="languageMenu" xPosition="before">
-                <app-languages [menu]="true"></app-languages>
+                <!--                <app-languages [menu]="true"></app-languages>-->
             </mat-menu>
         </li>
     </ul>

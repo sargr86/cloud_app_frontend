@@ -3,10 +3,12 @@
 /* Sidebar material styles */
 .mat-sidenav-container {
   height: 100vh;
+
   .mat-sidenav {
     background-color: #f5f5f5;
     color: white;
     margin-top: 65px;
+
     mat-icon {
       color: $dark_gray;
     }
@@ -89,12 +91,15 @@ button {
   float: right;
   display: block;
   margin-top: 14px;
+
   .mat-checkbox-inner-container {
     width: 25px;
     height: 25px;
+
     .mat-checkbox-frame {
       display: none !important;
     }
+
     .mat-checkbox-background {
       background-color: $dark_gray;
       border-radius: 20px !important;
@@ -178,6 +183,7 @@ mat-form-field.ng-touched.ng-invalid label {
   .mat-slide-toggle-thumb {
     background-color: $green;
   }
+
   .mat-slide-toggle-bar {
     background-color: #82c6446e;
   }
@@ -263,16 +269,21 @@ mat-form-field.ng-touched.ng-invalid label {
 
 .mat-tab-body-active {
   overflow: hidden !important;
+
   .mat-tab-body-content {
     padding-top: 5px;
   }
 }
 
 
-.mat-radio-label-content,.mat-button-toggle-label-content,.mat-slide-toggle-content{
-  font-size:14px!important;
+.mat-radio-label-content, .mat-button-toggle-label-content, .mat-slide-toggle-content {
+  font-size: 14px !important;
 }
 
- .loginForm .mat-form-field-label {
+.loginForm .mat-form-field-label {
   color: $white !important;
+}
+
+.mat-form-field {
+  display: block !important;
 }

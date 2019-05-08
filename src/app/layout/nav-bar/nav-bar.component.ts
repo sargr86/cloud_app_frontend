@@ -54,7 +54,7 @@ export class NavBarComponent implements OnInit {
      * @returns {any}
      */
     get addBtnShow() {
-        return !(/profile|users|edit|add/.test(this.router.url) || this.pageTitle == 'admin_dashboard');
+        return !(/profile|users|edit|add/.test(this.router.url) || this.pageTitle === 'admin_dashboard');
     }
 
     /**

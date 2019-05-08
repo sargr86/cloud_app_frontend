@@ -35,8 +35,12 @@
     <div class="auth" *ngIf="_auth.loggedIn()">
 
         <!-- Navigate to add-*item page button -->
-        <button (click)="router.navigate([getAddBtnUrl()])" *ngIf="addBtnShow">
+        <button (click)="router.navigate([getAddBtnUrl()])" *ngIf="addBtnShow && _auth.checkRoles('admin')">
             <i class="fa fa-plus-square"></i>
+        </button>
+
+        <button (click)="router.navigate(['files/import'])" *ngIf="!router.url.includes('import')">
+            <i class="fa fa-file-import"></i>
         </button>
 
 

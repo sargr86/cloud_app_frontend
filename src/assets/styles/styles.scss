@@ -1,6 +1,5 @@
 @import './variables';
 @import './mixins';
-
 // material theme
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 @import "./material_workarounds";
@@ -8,14 +7,18 @@
 // Drop zone styles
 @import "./dropzone";
 
+// Ng-select styles
+@import "~@ng-select/ng-select/themes/material.theme.css";
 
 // regular style toast
 @import '~ngx-toastr/toastr.css';
+
 /* Toastr success message */
 .toast-success {
   background-color: $green !important;
 }
-.toast-error{
+
+.toast-error {
   background-color: $red !important;
 }
 
@@ -27,7 +30,7 @@ body {
 }
 
 ul {
-  list-style: none!important;
+  list-style: none !important;
   padding: 0;
   margin: 0;
 }
@@ -51,7 +54,7 @@ ul {
   @include terminalTitle;
 }
 
-.sidebarLinks{
+.sidebarLinks {
   @include sidebarLinks;
 }
 

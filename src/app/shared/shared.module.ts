@@ -5,16 +5,17 @@ import {MaterialModule} from "./modules/material.module";
 import {NotFoundComponent} from './components/not-found/not-found.component';
 import {TranslateModule} from "@ngx-translate/core";
 import {InfoBoxComponent} from "./components/info-box/info-box.component";
-import { GetLangPipe } from './pipes/get-lang.pipe';
+import {GetLangPipe} from './pipes/get-lang.pipe';
 import {DropzoneModule} from "ngx-dropzone-wrapper";
-import { GetImageUrlPipe } from './pipes/get-image-url.pipe';
-import { GetUserRegistrationFieldsPipe } from './pipes/get-user-registration-fields.pipe';
-import { FixMatDatepickerDateFormatPipe } from './pipes/fix-mat-datepicker-date-format.pipe';
-import { SetMatDatepickerAdapterLocalePipe } from './pipes/set-mat-datepicker-adapter-locale.pipe';
-import { LanguagesComponent } from './components/languages/languages.component';
-import { ReplaceAllPipe } from './pipes/replace-all.pipe';
-import { MaterialReusableTableComponent } from './components/material-reusable-table/material-reusable-table.component';
-import { GetMatTableDataSourcePipe } from './pipes/get-mat-table-data-source.pipe';
+import {GetImageUrlPipe} from './pipes/get-image-url.pipe';
+import {GetUserRegistrationFieldsPipe} from './pipes/get-user-registration-fields.pipe';
+import {FixMatDatepickerDateFormatPipe} from './pipes/fix-mat-datepicker-date-format.pipe';
+import {SetMatDatepickerAdapterLocalePipe} from './pipes/set-mat-datepicker-adapter-locale.pipe';
+import {LanguagesComponent} from './components/languages/languages.component';
+import {ReplaceAllPipe} from './pipes/replace-all.pipe';
+import {MaterialReusableTableComponent} from './components/material-reusable-table/material-reusable-table.component';
+import {GetMatTableDataSourcePipe} from './pipes/get-mat-table-data-source.pipe';
+import {NgSelectModule} from '@ng-select/ng-select';
 
 @NgModule({
     declarations: [
@@ -36,9 +37,10 @@ import { GetMatTableDataSourcePipe } from './pipes/get-mat-table-data-source.pip
         ReactiveFormsModule,
         MaterialModule,
         TranslateModule,
-        DropzoneModule
+        DropzoneModule,
+        NgSelectModule
     ],
-    providers:[
+    providers: [
         GetLangPipe,
         GetImageUrlPipe,
         ReplaceAllPipe,
@@ -53,6 +55,7 @@ import { GetMatTableDataSourcePipe } from './pipes/get-mat-table-data-source.pip
         MaterialModule,
         TranslateModule,
         DropzoneModule,
+        NgSelectModule,
         InfoBoxComponent,
         LanguagesComponent,
         MaterialReusableTableComponent,
