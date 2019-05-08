@@ -1,0 +1,14 @@
+
+.formContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  form {
+    width: 28%;
+    margin: 0 20px;
+    .importFiles {
+      text-transform: uppercase;
+    }
+  }
+}

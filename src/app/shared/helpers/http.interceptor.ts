@@ -48,7 +48,6 @@ export class RequestInterceptor implements HttpInterceptor {
                         break;
                     case 424:
                         this.translate.get([err.error.msg]).subscribe((dt) => {
-                            console.log(err.error.files)
                             this.toastr.error(err.error.files, dt['invalid_file_type'], {
                                 enableHtml: true,
                                 disableTimeOut: true

@@ -1,0 +1,30 @@
+<mat-card>
+
+    <div class="formContainer">
+
+
+        <form [formGroup]="importFilesForm">
+            <mat-form-field>
+                <input matInput formControlName="group" placeholder="Group" required>
+            </mat-form-field>
+
+            <ng-select [placeholder]="'File type'">
+                <ng-option *ngFor="let type of fileTypes" [value]="type">{{type}}</ng-option>
+            </ng-select>
+
+            <button mat-raised-button color="primary" class="importFiles" (click)="importFiles()">
+                Import
+            </button>
+        </form>
+
+
+        <!-- User image or drop zone container-->
+        <div class="userImg">
+            <!-- Showing drop zone for non-authenticated user and for a user without a profile image -->
+            <dropzone [config]="dropzoneConfig" (addedFile)="onAddedFile($event)" (removedFile)="removeFile($event)"
+                      id="dropzone" class="importFilesDropzone" #dropzone (thumbnail)="onAddedFile($event)"
+                      [message]="'click_drag'|translate">
+            </dropzone>
+        </div>
+    </div>
+</mat-card>

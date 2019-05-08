@@ -1,3 +1,7 @@
+@import './variables';
+@import './mixins';
+
+
 .profileImgDropzone {
   width: 350px;
   height: 350px;
@@ -25,14 +29,29 @@
 }
 
 .importFilesDropzone {
-  width: 500px;
+  width: 555px;
   height: 350px;
   overflow: hidden;
+
+  .dz-started.dz-wrapper {
+    //background-color: silver !important;
+    border: 1px dashed silver;
+  }
 
   .dz-wrapper, .dz-message {
     height: 97%;
     overflow: hidden !important;
   }
+
+  .dz-remove {
+    color: $red;
+    text-decoration: none;
+  }
+
+  .dz-started .dz-message, .dz-progress {
+    display: none !important;
+  }
+
 }
 
 .flagDropzone {
