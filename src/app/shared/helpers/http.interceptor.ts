@@ -50,7 +50,7 @@ export class RequestInterceptor implements HttpInterceptor {
                         this.translate.get([err.error.msg]).subscribe((dt) => {
                             this.toastr.error(err.error.files, dt['invalid_file_type'], {
                                 enableHtml: true,
-                                disableTimeOut: true
+                                // disableTimeOut: true
                             });
                         });
                         break;
