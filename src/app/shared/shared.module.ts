@@ -61,6 +61,7 @@ import {NgSelectModule} from '@ng-select/ng-select';
         MaterialReusableTableComponent,
         GetLangPipe,
         GetImageUrlPipe,
+        GetMatTableDataSourcePipe
     ]
 })
 export class SharedModule {

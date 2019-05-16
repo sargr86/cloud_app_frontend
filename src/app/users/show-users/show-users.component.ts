@@ -49,7 +49,7 @@ export class ShowUsersComponent implements OnInit {
         this._users.changeUserStatus(data).subscribe(dt => {
             this.users = dt;
             this.subject.setTableData(dt);
-        })
+        });
     }
 
     /**

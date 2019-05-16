@@ -14,7 +14,7 @@
         <!-- Regular text values -->
         <ng-template #textValues>
           <ng-container *ngIf="col.includes('status');else regularValues">
-            <p class="status {{el[col]['name_en']}}">{{el[col]['name_'+lang]}}</p>
+            <p class="status {{el[col]['name']}}">{{el[col]['name']}}</p>
           </ng-container>
 
           <ng-template #regularValues>
@@ -24,7 +24,7 @@
 
         <!-- Action buttons -->
         <ng-container *ngIf="col=='actions'">
-          <mat-slide-toggle class="statusToggler" [checked]="el.users_status.name_en=='active'"
+          <mat-slide-toggle class="statusToggler" [checked]="el.users_status.name=='active'"
                             (change)="changeStatus($event,el.id)"></mat-slide-toggle>
         </ng-container>
       </td>

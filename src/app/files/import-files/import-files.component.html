@@ -1,9 +1,10 @@
 <mat-card>
 
-    <div class="formContainer">
+
+    <div class="formContainer" *ngIf="!filesUploaded">
 
 
-        <form [formGroup]="importFilesForm">
+        <form [formGroup]="importFilesForm" enctype="multipart/form-data" method="post">
             <mat-form-field>
                 <input matInput formControlName="group" placeholder="Group" required>
             </mat-form-field>
@@ -19,7 +20,7 @@
 
 
         <!-- User image or drop zone container-->
-        <div class="userImg">
+        <div class="filesZone">
             <!-- Showing drop zone for non-authenticated user and for a user without a profile image -->
             <dropzone [config]="dropzoneConfig" (addedFile)="onAddedFile($event)" (removedFile)="removeFile($event)"
                       id="dropzone" class="importFilesDropzone" #dropzone (thumbnail)="onAddedFile($event)"
@@ -27,4 +28,88 @@
             </dropzone>
         </div>
     </div>
+
+    <div class="results">
+
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 resultsTable"
+               *ngIf="dataSource && filesUploaded">
+            <ng-container *ngFor="let dt of getObjectKeys(dataSource.data[0]);let ind = index">
+                <ng-container matColumnDef="{{dt}}">
+
+                    <th mat-header-cell *matHeaderCellDef>{{dt}}</th>
+                    <td mat-cell *matCellDef="let el">
+                        {{el[dt]}}
+                    </td>
+                </ng-container>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="getObjectKeys(dataSource.data[0])"></tr>
+            <tr mat-row *matRowDef="let row; columns: getObjectKeys(dataSource.data[0]);"></tr>
+
+        </table>
+        <mat-paginator [pageSizeOptions]="[3, 10, 20]" [hidden]="!filesUploaded"
+                       showFirstLastButtons></mat-paginator>
+
+    </div>
+
+
+    <!--        <ul>-->
+    <!--            <li *ngFor="let data of loadedData|keyvalue; let tIndex = index">-->
+    <!--                <span>{{data['key']}}</span>-->
+    <!--                &lt;!&ndash;                <table>&ndash;&gt;-->
+
+    <!--                &lt;!&ndash;                    <thead>&ndash;&gt;-->
+    <!--                &lt;!&ndash;                    <ng-container *ngFor="let dt of data['value'][0]|keyvalue">&ndash;&gt;-->
+    <!--                &lt;!&ndash;                        <th>{{dt['key']}}</th>&ndash;&gt;-->
+    <!--                &lt;!&ndash;                    </ng-container>&ndash;&gt;-->
+    <!--                &lt;!&ndash;                    </thead>&ndash;&gt;-->
+    <!--                &lt;!&ndash;                    <tbody>&ndash;&gt;-->
+    <!--                &lt;!&ndash;                    <ng-container *ngFor="let tData of data['value'];let ind = index">&ndash;&gt;-->
+    <!--                &lt;!&ndash;&lt;!&ndash;                        {{tData|json}}&ndash;&gt;&ndash;&gt;-->
+    <!--                &lt;!&ndash;                        <tr>&ndash;&gt;-->
+    <!--                &lt;!&ndash;                            <ng-container *ngFor="let dt of getObjectValues(tData)">&ndash;&gt;-->
+    <!--                &lt;!&ndash;                                <td>{{dt}}</td>&ndash;&gt;-->
+    <!--                &lt;!&ndash;                            </ng-container>&ndash;&gt;-->
+    <!--                &lt;!&ndash;                        </tr>&ndash;&gt;-->
+    <!--                &lt;!&ndash;                    </ng-container>&ndash;&gt;-->
+    <!--                &lt;!&ndash;                    </tbody>&ndash;&gt;-->
+
+    <!--                &lt;!&ndash;                </table>&ndash;&gt;-->
+    <!--                <div class="mat-elevation-z8">-->
+
+
+    <!--                    <ng-template #myTemplate let-col let-foo="bar">-->
+    <!--                        <div>{{col}}</div>-->
+    <!--                        <table mat-table [dataSource]="foo" class="mat-elevation-z8">-->
+    <!--                            <ng-container *ngFor="let dt of data['value'][0]|keyvalue;let ind = index">-->
+    <!--                                <ng-container matColumnDef="{{dt['key']}}">-->
+    <!--                                    <th mat-header-cell *matHeaderCellDef>{{dt['key']}}</th>-->
+    <!--                                    <td mat-cell *matCellDef="let el">-->
+    <!--                                        {{el[dt['key']]}}-->
+    <!--                                    </td>-->
+    <!--                                </ng-container>-->
+    <!--                            </ng-container>-->
+
+    <!--                            <tr mat-header-row *matHeaderRowDef="getObjectKeys(data['value'][0])"></tr>-->
+    <!--                            <tr mat-row *matRowDef="let row; columns: getObjectKeys(data['value'][0]);"></tr>-->
+
+    <!--                        </table>-->
+    <!--                        <mat-paginator [pageSizeOptions]="[3, 10, 20]" #paginator-->
+    <!--                                       showFirstLastButtons></mat-paginator>-->
+    <!--                    </ng-template>-->
+
+    <!--                    &lt;!&ndash; render above template with a custom context &ndash;&gt;-->
+    <!--                    <ng-template [ngTemplateOutlet]="myTemplate"-->
+    <!--                                 [ngTemplateOutletContext]="{-->
+    <!--                                           $implicit: 'some col value',-->
+    <!--                                           bar: getDataSrc(data['value'],tIndex)-->
+    <!--                                        }"-->
+    <!--                    ></ng-template>-->
+
+
+    <!--                </div>-->
+    <!--            </li>-->
+    <!--        </ul>-->
+    <!--        <app-mat-table [cols]="displayedColumns" [data]="users" [lang]="lang"></app-mat-table>-->
+
 </mat-card>

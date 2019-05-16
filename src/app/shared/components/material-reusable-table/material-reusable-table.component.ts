@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {SubjectService} from "../../services/subject.service";
-import {MatPaginator, MatSlideToggleChange, MatTableDataSource} from "@angular/material";
-import {GetMatTableDataSourcePipe} from "../../pipes/get-mat-table-data-source.pipe";
+import {SubjectService} from '../../services/subject.service';
+import {MatPaginator, MatSlideToggleChange, MatTableDataSource} from '@angular/material';
+import {GetMatTableDataSourcePipe} from '../../pipes/get-mat-table-data-source.pipe';
 
 @Component({
     selector: 'app-mat-table',
@@ -11,7 +11,6 @@ import {GetMatTableDataSourcePipe} from "../../pipes/get-mat-table-data-source.p
 export class MaterialReusableTableComponent implements OnInit {
     @Input() cols;
     @Input() data;
-    @Input() lang;
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
 

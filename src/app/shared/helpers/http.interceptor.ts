@@ -36,7 +36,7 @@ export class RequestInterceptor implements HttpInterceptor {
                     // Express Validator errors
                     case 422:
                         this.translate.get(err.error.msg).subscribe((dt) => {
-                            this.toastr.error(dt)
+                            this.toastr.error(dt);
                         });
                         break;
                     // Multer errors
@@ -64,7 +64,9 @@ export class RequestInterceptor implements HttpInterceptor {
                             name = err.error;
                         } else {
                             name = err.error.name;
-                            if (original && original.hasOwnProperty('sqlMessage')) msg = original.sqlMessage;
+                            if (original && original.hasOwnProperty('sqlMessage')) {
+                                msg = original.sqlMessage;
+                            }
 
                             // MySQL isn't connected error
                             if (name.includes('SequelizeConnectionRefusedError')) {

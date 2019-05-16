@@ -13,7 +13,7 @@ export const USER_PROFILE_IMG_DROPZONE_CONFIG: DropzoneConfigInterface = {
 export const FILE_IMPORT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     url: '{not_provided}',
     maxFilesize: 1,
-    acceptedFiles: 'image/*', // '.csv,.xls'
+    acceptedFiles: '.csv,.xls,.xlsx', // '.csv,.xls'
     autoProcessQueue: false,
     uploadMultiple: true,
     maxFiles: 10,
