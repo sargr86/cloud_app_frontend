@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card style="overflow: scroll;height:700px;">
 
 
     <div class="formContainer" *ngIf="!filesUploaded">
@@ -9,8 +9,8 @@
                 <input matInput formControlName="group" placeholder="Group" required>
             </mat-form-field>
 
-            <ng-select [placeholder]="'File type'">
-                <ng-option *ngFor="let type of fileTypes" [value]="type">{{type}}</ng-option>
+            <ng-select [placeholder]="'File type'" formControlName="type">
+                <ng-option *ngFor="let type of fileTypes" [value]="type['value']">{{type['label']}}</ng-option>
             </ng-select>
 
             <button mat-raised-button color="primary" class="importFiles" (click)="importFiles()">
@@ -31,85 +31,103 @@
 
     <div class="results">
 
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 resultsTable"
-               *ngIf="dataSource && filesUploaded">
-            <ng-container *ngFor="let dt of getObjectKeys(dataSource.data[0]);let ind = index">
-                <ng-container matColumnDef="{{dt}}">
+        <!--        <div class="analisysCompleted" *ngIf="paginationApplied">-->
+        <!--            <p>The files analysis completed</p>-->
+        <!--            <button (click)="loadPagination()" mat-raised-button>View Results</button>-->
+        <!--        </div>-->
 
-                    <th mat-header-cell *matHeaderCellDef>{{dt}}</th>
-                    <td mat-cell *matCellDef="let el">
-                        {{el[dt]}}
-                    </td>
+        <!--        <button (click)="stop()">Stop</button>-->
+
+        <div class="spinnerContainer">
+            <!--            <span *ngIf="filesUploaded && !paginationApplied">{{loaderText}}</span>-->
+            <mat-spinner [diameter]="50" *ngIf="filesProcessing"></mat-spinner>
+        </div>
+
+
+        <!--        <ng-container *ngFor="let ds of dataSource|keyvalue;let ind = index;let last = last">-->
+        <!--            <h3 [hidden]="filesUploaded && !paginationApplied">{{ds['key']}}</h3>-->
+        <!--            <table mat-table [dataSource]="ds['value']" class="mat-elevation-z8 resultsTable"-->
+        <!--                   [hidden]="filesUploaded && !paginationApplied"-->
+        <!--            >-->
+        <!--                <ng-container *ngFor="let dt of getObjectKeys(ds['value'].data[0],last);let ind = index">-->
+        <!--                    <ng-container matColumnDef="{{dt}}">-->
+
+        <!--                        <th mat-header-cell *matHeaderCellDef>{{dt}}</th>-->
+        <!--                        <td mat-cell *matCellDef="let el">-->
+        <!--                            {{el[dt]}}-->
+        <!--                        </td>-->
+        <!--                    </ng-container>-->
+        <!--                </ng-container>-->
+
+        <!--                <tr mat-header-row *matHeaderRowDef="getObjectKeys(ds['value'].data[0],last)"></tr>-->
+        <!--                <tr mat-row *matRowDef="let row; columns: getObjectKeys(ds['value'].data[0], last);"></tr>-->
+        <!--            </table>-->
+        <!--            <mat-paginator [pageSizeOptions]="[3, 10, 20]" [hidden]="filesUploaded && !paginationApplied"-->
+        <!--                           showFirstLastButtons></mat-paginator>-->
+
+        <!--        </ng-container>-->
+
+
+        <ng-container *ngIf="filesUploaded && !fileDetailsShown">
+
+            <div class="tableHeader">
+                <h3>File list</h3>
+                <button mat-raised-button color="primary">Active version/All versions</button>
+            </div>
+
+            <table mat-table [dataSource]="loadedData|dataSource" class="mat-elevation-z8 listTable">
+
+
+                <ng-container *ngFor="let col of columns;let ind = index">
+                    <ng-container matColumnDef="{{col}}">
+
+                        <th mat-header-cell *matHeaderCellDef>{{col|replace:'_':' '}}</th>
+                        <td mat-cell *matCellDef="let el;let i = index">
+                            <input type="checkbox" *ngIf="col==='file_name'" [id]="'file_name'+i"
+                                   (change)="selectUploadedFile(el)">
+                            <label [for]="'file_name'+i">{{el[col] ? el[col] : 'n/a'}}</label>
+
+                        </td>
+                    </ng-container>
+
                 </ng-container>
-            </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="getObjectKeys(dataSource.data[0])"></tr>
-            <tr mat-row *matRowDef="let row; columns: getObjectKeys(dataSource.data[0]);"></tr>
+                <tr mat-header-row *matHeaderRowDef="columns"></tr>
+                <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+            </table>
 
-        </table>
-        <mat-paginator [pageSizeOptions]="[3, 10, 20]" [hidden]="!filesUploaded"
-                       showFirstLastButtons></mat-paginator>
+            <button mat-raised-button color="primary" class="showFileDetails" (click)="showFileDetails()">
+                File details
+            </button>
 
+        </ng-container>
+
+        <ng-container *ngIf="fileDetailsShown">
+
+            <div class="tableHeader">
+                <h3>Summary</h3>
+            </div>
+            <table mat-table [dataSource]="selectedUploadedFiles|dataSource" class="mat-elevation-z8 listTable">
+
+
+                <ng-container *ngFor="let col of detailColumns;let ind = index">
+                    <ng-container matColumnDef="{{col}}">
+
+                        <th mat-header-cell *matHeaderCellDef>{{col|replace:'_':' '}}</th>
+                        <td mat-cell *matCellDef="let el;let i = index">
+                            <!--                            <input type="checkbox" *ngIf="col==='file_name'" [id]="'file_name'+i"-->
+                            <!--                                   (change)="selectUploadedFile(el)">-->
+                            <label [for]="'file_name'+i" *ngIf="col!=='actions'">{{el[col] ? el[col] : 'n/a'}}</label>
+                            <button *ngIf="col==='actions'" color="warn" mat-raised-button>Details</button>
+                        </td>
+                    </ng-container>
+
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="detailColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: detailColumns;"></tr>
+            </table>
+        </ng-container>
     </div>
-
-
-    <!--        <ul>-->
-    <!--            <li *ngFor="let data of loadedData|keyvalue; let tIndex = index">-->
-    <!--                <span>{{data['key']}}</span>-->
-    <!--                &lt;!&ndash;                <table>&ndash;&gt;-->
-
-    <!--                &lt;!&ndash;                    <thead>&ndash;&gt;-->
-    <!--                &lt;!&ndash;                    <ng-container *ngFor="let dt of data['value'][0]|keyvalue">&ndash;&gt;-->
-    <!--                &lt;!&ndash;                        <th>{{dt['key']}}</th>&ndash;&gt;-->
-    <!--                &lt;!&ndash;                    </ng-container>&ndash;&gt;-->
-    <!--                &lt;!&ndash;                    </thead>&ndash;&gt;-->
-    <!--                &lt;!&ndash;                    <tbody>&ndash;&gt;-->
-    <!--                &lt;!&ndash;                    <ng-container *ngFor="let tData of data['value'];let ind = index">&ndash;&gt;-->
-    <!--                &lt;!&ndash;&lt;!&ndash;                        {{tData|json}}&ndash;&gt;&ndash;&gt;-->
-    <!--                &lt;!&ndash;                        <tr>&ndash;&gt;-->
-    <!--                &lt;!&ndash;                            <ng-container *ngFor="let dt of getObjectValues(tData)">&ndash;&gt;-->
-    <!--                &lt;!&ndash;                                <td>{{dt}}</td>&ndash;&gt;-->
-    <!--                &lt;!&ndash;                            </ng-container>&ndash;&gt;-->
-    <!--                &lt;!&ndash;                        </tr>&ndash;&gt;-->
-    <!--                &lt;!&ndash;                    </ng-container>&ndash;&gt;-->
-    <!--                &lt;!&ndash;                    </tbody>&ndash;&gt;-->
-
-    <!--                &lt;!&ndash;                </table>&ndash;&gt;-->
-    <!--                <div class="mat-elevation-z8">-->
-
-
-    <!--                    <ng-template #myTemplate let-col let-foo="bar">-->
-    <!--                        <div>{{col}}</div>-->
-    <!--                        <table mat-table [dataSource]="foo" class="mat-elevation-z8">-->
-    <!--                            <ng-container *ngFor="let dt of data['value'][0]|keyvalue;let ind = index">-->
-    <!--                                <ng-container matColumnDef="{{dt['key']}}">-->
-    <!--                                    <th mat-header-cell *matHeaderCellDef>{{dt['key']}}</th>-->
-    <!--                                    <td mat-cell *matCellDef="let el">-->
-    <!--                                        {{el[dt['key']]}}-->
-    <!--                                    </td>-->
-    <!--                                </ng-container>-->
-    <!--                            </ng-container>-->
-
-    <!--                            <tr mat-header-row *matHeaderRowDef="getObjectKeys(data['value'][0])"></tr>-->
-    <!--                            <tr mat-row *matRowDef="let row; columns: getObjectKeys(data['value'][0]);"></tr>-->
-
-    <!--                        </table>-->
-    <!--                        <mat-paginator [pageSizeOptions]="[3, 10, 20]" #paginator-->
-    <!--                                       showFirstLastButtons></mat-paginator>-->
-    <!--                    </ng-template>-->
-
-    <!--                    &lt;!&ndash; render above template with a custom context &ndash;&gt;-->
-    <!--                    <ng-template [ngTemplateOutlet]="myTemplate"-->
-    <!--                                 [ngTemplateOutletContext]="{-->
-    <!--                                           $implicit: 'some col value',-->
-    <!--                                           bar: getDataSrc(data['value'],tIndex)-->
-    <!--                                        }"-->
-    <!--                    ></ng-template>-->
-
-
-    <!--                </div>-->
-    <!--            </li>-->
-    <!--        </ul>-->
-    <!--        <app-mat-table [cols]="displayedColumns" [data]="users" [lang]="lang"></app-mat-table>-->
 
 </mat-card>

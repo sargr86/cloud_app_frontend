@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {FILE_TYPES} from '../../shared/constants/settings';
 import {FILE_IMPORT_DROPZONE_CONFIG} from '../../shared/constants/dropzone';
@@ -7,6 +7,7 @@ import {ToastrService} from 'ngx-toastr';
 import * as XLSX from 'xlsx';
 import {MatPaginator} from '@angular/material';
 import {GetMatTableDataSourcePipe} from '../../shared/pipes/get-mat-table-data-source.pipe';
+
 
 @Component({
     selector: 'app-import-files',
@@ -22,20 +23,34 @@ export class ImportFilesComponent implements OnInit {
     arrayBuffer: any;
     filesProcessing = false;
     filesUploaded = false;
+    paginationApplied = false;
     loadedData: any;
-    // @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
-    @ViewChild(MatPaginator) paginator: MatPaginator;
-    dataSource;
+
+    showResults = false;
+    t;
+    loaderText = '';
+    // columns = ['File Name', 'File Desc', 'File type', 'Import by', 'Import date/time', 'Changed by', 'Changed date/time'];
+    columns = ['file_name', 'file_desc', 'file_type', 'import_by', 'import_date', 'changed_by', 'changed_date'];
+    detailColumns = ['file_name', 'file_type', 'total_records', 'success', 'error', 'warnings/info', 'actions'];
+    selectedUploadedFiles = [];
+    fileDetailsShown = false;
+
+    @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
+
+    // @ViewChild(MatPaginator) paginator: MatPaginator;
+    dataSource = [];
     dataSource2;
 
     constructor(
         private _fb: FormBuilder,
         private _files: FilesService,
         private toastr: ToastrService,
-        private dataSrc: GetMatTableDataSourcePipe
+        private dataSrc: GetMatTableDataSourcePipe,
+        private cdr: ChangeDetectorRef
     ) {
         this.importFilesForm = this._fb.group({
             'group': ['', Validators.required],
+            'type': ['', Validators.required]
         });
     }
 
@@ -102,14 +117,18 @@ export class ImportFilesComponent implements OnInit {
 
             });
             this.filesProcessing = true;
-            this._files.import(formData).subscribe(dt => {
+            this.loaderText = 'Importing';
+            this._files.import(formData).subscribe((dt: any) => {
                 this.filesProcessing = false;
                 this.filesUploaded = true;
-                this.loadedData = dt[0];
-                this.dataSource = this.dataSrc.transform(dt[0]);
-                // console.log(this.paginator)
-                this.dataSource.paginator = this.paginator;
-                // console.log(this.dataSource)
+                this.loadedData = dt;
+                // for (const filename in dt) {
+                //     const dataSource = this.dataSrc.transform(dt[filename]);
+                //     this.dataSource[filename] = dataSource;
+                // }
+                this.cdr.detectChanges();
+
+
             });
         } else {
             this.toastr.error('Please select at least one file', 'No files');
@@ -127,7 +146,60 @@ export class ImportFilesComponent implements OnInit {
         return Object.values(obj);
     }
 
-    getObjectKeys(obj) {
+    getObjectKeys(obj, last) {
+        if (last) {
+            setTimeout(() => this.loadPagination(), 14000);
+            // this.t = setTimeout(() => {
+            //     this.paginationApplied = true;
+            //     this.filesProcessing = false;
+            // }, 4000);
+            //
+
+        }
         return Object.keys(obj);
+    }
+
+    stop() {
+        console.log('stop' + this.t)
+        clearTimeout(this.t);
+    }
+
+
+    loadPagination() {
+
+        // console.log(this.loaderText)
+        this.showResults = true;
+        let counter = 0;
+        const paginatorArr = this.paginator.toArray();
+        for (const filename in this.dataSource) {
+            this.dataSource[filename].paginator = paginatorArr[counter];
+            if (counter === paginatorArr.length - 1) {
+                counter = 0;
+                break;
+            } else ++counter;
+        }
+
+
+        this.paginationApplied = true;
+        this.filesProcessing = false;
+    }
+
+    getArray() {
+        return new Array(this.dropzoneFiles.length);
+    }
+
+    selectUploadedFile(fileData) {
+        this.selectedUploadedFiles.push(fileData);
+
+    }
+
+    showFileDetails() {
+        if (this.selectedUploadedFiles.length === 0) {
+            this.toastr.error('Please select at least one file with table checkbox', 'No files selected');
+        } else {
+
+            this.fileDetailsShown = true;
+        }
+        console.log(this.selectedUploadedFiles)
     }
 }

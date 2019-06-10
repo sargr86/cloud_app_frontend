@@ -15,9 +15,37 @@
 }
 
 .results {
+  .spinnerContainer {
+    display: flex;
+    justify-content: center;
+  }
+
+  .analisysCompleted {
+    width: 20%;
+    margin: auto;
+    text-align: center;
+  }
 
   .resultsTable {
     width: 100%;
   }
 
+}
+
+.listTable {
+  width: 50%;
+  margin: auto;
+}
+
+.tableHeader {
+  text-align: center;
+
+  button {
+    margin: 20px;
+  }
+}
+
+.showFileDetails {
+  display: block;
+  margin: 20px auto;
 }

@@ -5,5 +5,5 @@ export const TEXTAREA_AUTOSIZE_MIN_ROWS = 5;
 export const TEXTAREA_AUTOSIZE_MAX_ROWS = 10;
 export const UPLOADS_FOLDER = `${API_HOST}uploads/`;
 
-export const FILE_TYPES = ['Master', 'Transactional'];
+export const FILE_TYPES = [{label: 'Master', value: 'M'}, {label: 'Transactional', value: 'T'}];
 

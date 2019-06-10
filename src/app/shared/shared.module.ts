@@ -16,6 +16,7 @@ import {ReplaceAllPipe} from './pipes/replace-all.pipe';
 import {MaterialReusableTableComponent} from './components/material-reusable-table/material-reusable-table.component';
 import {GetMatTableDataSourcePipe} from './pipes/get-mat-table-data-source.pipe';
 import {NgSelectModule} from '@ng-select/ng-select';
+import {ReplacePipe} from './pipes/replace.pipe';
 
 @NgModule({
     declarations: [
@@ -29,7 +30,8 @@ import {NgSelectModule} from '@ng-select/ng-select';
         LanguagesComponent,
         ReplaceAllPipe,
         MaterialReusableTableComponent,
-        GetMatTableDataSourcePipe
+        GetMatTableDataSourcePipe,
+        ReplacePipe
     ],
     imports: [
         CommonModule,
@@ -61,7 +63,8 @@ import {NgSelectModule} from '@ng-select/ng-select';
         MaterialReusableTableComponent,
         GetLangPipe,
         GetImageUrlPipe,
-        GetMatTableDataSourcePipe
+        GetMatTableDataSourcePipe,
+        ReplacePipe
     ]
 })
 export class SharedModule {
